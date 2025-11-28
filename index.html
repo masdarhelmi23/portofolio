@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Masdar Helmi</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container hero-content">
+            <div class="hero-text" data-aos="fade-up" data-aos-duration="1000">
+                <p class="tagline">Hai, Perkenalkan nama saya Masdar Helmi</p>
+                <h1>Creative UI/UX Designer & Web Developer</h1>
+                <p class="bio">Saya membantu bisnis mengubah ide menjadi pengalaman digital yang intuitif dan berdampak. Silakan lihat koleksi karya saya di bawah.</p>
+                <a href="#portfolio" class="cta-button primary">Lihat Koleksi Karya</a>
+            </div>
+            
+            <div class="hero-image" data-aos="fade-left" data-aos-duration="1500">
+                <img src="assets/aku.png" alt="Foto Profesional Masdar Helmi">
+            </div>
+        </div>
+    </header>
+
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <h2 data-aos="fade-right" data-aos-duration="1000">Karya Pilihan</h2>
+            
+            <div class="portfolio-filter" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                <button class="filter-btn active" data-filter="all">Semua Karya</button>
+                <button class="filter-btn" data-filter="design">Desain Grafis & UI/UX</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+            </div>
+            
+            <div class="portfolio-grid">
+                
+                <div class="project-card large-card" data-category="design" data-aos="fade-up" data-aos-delay="200" onclick="openImageModal(this, 'gallery-banner')">
+                    
+                    <div class="card-content-wrapper">
+                        <div class="banner-gallery">
+                            <img src="assets/banner-1.jpg" alt="Banner Desain 1">
+                            <img src="assets/banner-2.jpg" alt="Banner Desain 2">
+                            <img src="assets/banner-3.jpg" alt="Banner Desain 3">
+                            <img src="assets/banner-4.jpg" alt="Banner Desain 4">
+                            <img src="assets/banner-5.jpg" alt="Banner Desain 5">
+                            <img src="assets/banner-6.jpg" alt="Banner Desain 6">
+                            <img src="assets/banner-7.jpg" alt="Banner Desain 7">
+                        </div>
+                        
+                        <div class="project-text">
+                            <h3>Kolase Solusi Komunikasi Visual (7 Aset Banner)</h3>
+                            <p>Kumpulan desain grafis aset visual yang berfokus pada peningkatan Brand Awareness dan Konversi. Klik kartu ini untuk melihat semua detail desain dalam pop-up gallery.</p>
+                            <p class="tools-used">Kategori: Desain Grafis </p>
+                            <p class="tools-used">Tools: canva, CorelDraw, Figma.</p>
+                            <span class="click-prompt">Lihat Galeri Foto &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card large-card" data-category="web" data-aos="fade-up" data-aos-delay="300" onclick="openImageModal(this, 'gallery-web')">
+                    
+                    <div class="web-gallery">
+                        <img src="assets/web-1.jpg" alt="Web Catering">
+                        <img src="assets/web-2.jpg" alt="Web Motopart">
+                        <img src="assets/web-3.jpg" alt="Web Kost">
+                        <img src="assets/web-4.jpg" alt="Web Login Admin">
+                        <img src="assets/web-5.jpg" alt="Web Dashboard">
+                    </div>
+                    <div class="project-text">
+                        <h3>Sistem Web Kustom (Catering, Motopart, Kost)</h3>
+                        <p>Saya berfokus pada pengembangan solusi web backend dan frontend yang efisien. Proyek ini dibangun menggunakan Framework Laravel (PHP) dan Database MySQL untuk performa yang stabil dan maintainable.</p>
+                        
+                        <p>Proyek yang dikerjakan meliputi: Website Catering (wekkucatering.my.id), Sistem Penjualan Sparepart Motor (MotoPart), dan Platform Sewa Kost (babolkost).</p>
+
+                        <p class="tools-used">Kategori: Web Development </p>
+                        <p class="tools-used">Tools: Laravel (PHP), MySQL, HTML5, Bootstrap, JavaScript</p>
+                        <a href="https://wekkucatering.my.id" target="_blank" onclick="event.stopPropagation()">Kunjungi Website Catering &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Masdar Helmi. Semua Hak Dilindungi.</p>
+            <div class="social-links">
+                <p>Temukan saya di:</p>
+                <a href="https://www.instagram.com/msdrhlmi_?igsh=MXFwa3FteHE0d21lNQ==" target="_blank">Instagram</a> |
+                <a href="https://www.tiktok.com/@msdrhlm?_r=1&_t=ZS-91mhXS5jbM4" target="_blank">Tiktok</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="lightbox-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 class="modal-title"></h3> 
+            <div class="modal-gallery">
+                </div>
+            <p class="modal-caption">Klik pada gambar untuk resolusi penuh di tab baru.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true, 
+            duration: 800 
+        });
+
+        // =========================================================
+        // JAVASCRIPT UNTUK FILTER DAN MODAL
+        // =========================================================
+
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.9)';
+                    
+                    setTimeout(() => {
+                        card.style.display = 'none';
+
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'flex'; 
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'scale(1)';
+                            }, 50); 
+                        }
+                    }, 300); 
+                });
+            });
+        });
+
+        // Logika Modal/Lightbox Baru (Mendukung Galeri Banner dan Galeri Web)
+        const modal = document.getElementById('lightbox-modal');
+        const closeBtn = document.querySelector('.close-btn');
+        const modalGallery = document.querySelector('.modal-gallery');
+        const modalTitle = document.querySelector('.modal-title');
+
+        // 1. Fungsi untuk membuka modal
+        function openImageModal(element, type) {
+            
+            if (event) event.stopPropagation(); 
+            
+            modalGallery.innerHTML = '';
+            
+            // Tentukan tata letak Grid di Modal
+            modalGallery.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
+
+            let imagesSourceWrapper;
+            let titleText;
+
+            if (type === 'gallery-banner') {
+                imagesSourceWrapper = element.querySelector('.banner-gallery');
+                titleText = "Ini adalah tampilan detail 7 desain banner dari koleksi saya.";
+            } else if (type === 'gallery-web') {
+                 imagesSourceWrapper = element.querySelector('.web-gallery');
+                 titleText = "Detail Screenshot Proyek Web Development (5 Tampilan)";
+            }
+            
+            modalTitle.textContent = titleText;
+
+            if (imagesSourceWrapper) {
+                imagesSourceWrapper.querySelectorAll('img').forEach(img => {
+                    const link = document.createElement('a');
+                    link.href = img.src; 
+                    link.target = '_blank'; 
+                    link.appendChild(img.cloneNode(true));
+                    modalGallery.appendChild(link);
+                });
+            }
+
+            // Tampilkan modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
+            setTimeout(() => {
+                modal.classList.add('active'); 
+            }, 10);
+        }
+
+        // 2. Fungsi untuk menutup modal
+        function closeModal() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; 
+            }, 300); 
+        }
+
+        // Event listener untuk tombol close (X)
+        closeBtn.addEventListener('click', closeModal);
+
+        // Event listener untuk menutup modal jika klik di luar modal
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
