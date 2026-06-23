@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Profesional | [NAMA ANDA]</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js CDN untuk efek 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP CDN untuk Animasi Masuk -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Google Fonts: Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#070709',
+                        accent: '#6366f1',
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #070709; overflow-x: hidden; }
+        /* Glassmorphism standar mewah */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #070709; }
+        ::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+    </style>
+</head>
+<body class="text-slate-100 font-sans">
+
+    <!-- CANVAS 3D BACKGROUND (Jangan dihapus) -->
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
+
+    <!-- NAVBAR MENGAPUNG -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl glass-panel rounded-full px-8 py-4 flex justify-between items-center">
+        <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-white via-slate-300 to-indigo-400 bg-clip-text text-transparent">
+            [NAMA ANDA].
+        </span>
+        <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide text-slate-400">
+            <a href="#hero" class="hover:text-white transition">01. Beranda</a>
+            <a href="#tentang" class="hover:text-white transition">02. Nilai Jual</a>
+            <a href="#projek" class="hover:text-white transition">03. Hasil Kerja</a>
+            <a href="#kontak" class="hover:text-white transition">04. Kontak</a>
+        </div>
+        <a href="#kontak" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition shadow-lg shadow-indigo-600/30">
+            Unduh CV
+        </a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
+        <div class="absolute w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl -z-5"></div>
+        
+        <div class="hero-elem inline-block glass-panel px-4 py-1.5 rounded-full text-xs md:text-sm text-indigo-400 mb-6 border-indigo-500/20">
+            <span class="inline-block w-2 h-2 rounded-full bg-indigo-500 animate-pulse mr-2"></span> 
+            Terbuka untuk Peluang Baru & Kerja Sama
+        </div>
+
+        <h1 class="hero-elem text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight max-w-5xl mb-6">
+            Membangun <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Dampak</span> Lewat Eksekusi.
+        </h1>
+
+        <p class="hero-elem text-slate-400 text-lg md:text-xl max-w-2xl mb-10 font-normal leading-relaxed">
+            Saya seorang <span class="text-white font-semibold">[Posisi Kerja, cth: Fullstack Developer]</span> yang berfokus pada efisiensi sistem, desain fungsional, dan pencapaian target bisnis.
+        </p>
+
+        <div class="hero-elem flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <a href="#projek" class="bg-white text-dark font-bold px-8 py-4 rounded-full hover:bg-slate-200 transition flex items-center justify-center space-x-2 group">
+                <span>Lihat Pembuktian</span>
+                <span class="group-hover:translate-x-1 transition">→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- SEKSI TENTANG & METRIK (Alasan HRD Harus Rekrut) -->
+    <section id="tentang" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-xs uppercase tracking-widest text-indigo-400 mb-3 font-semibold">Mengapa Memilih Saya?</h2>
+            <p class="text-3xl md:text-4xl font-bold">Bukan Sekadar Menjalankan Tugas.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+                <div class="text-5xl font-bold text-indigo-400 mb-4">100%</div>
+                <h3 class="text-xl font-bold mb-2 text-white">Orientasi Hasil</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Setiap baris kode atau desain yang saya buat selalu diukur dari dampaknya terhadap kemudahan user dan metrik perusahaan.</p>
+            </div>
+            
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+                <div class="text-5xl font-bold text-purple-400 mb-4">3+</div>
+                <h3 class="text-xl font-bold mb-2 text-white">Tahun Pengalaman</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Terbiasa bekerja dalam ritme cepat, menghadapi revisi kritis, dan berkolaborasi lintas divisi (Tim Bisnis & Desain).</p>
+            </div>
+
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+                <div class="text-5xl font-bold text-pink-400 mb-4">0</div>
+                <h3 class="text-xl font-bold mb-2 text-white">Drama, High Ownership</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">Mandiri dalam mencari solusi saat *stuck*, proaktif memberi laporan progres harian tanpa harus ditagih terlebih dahulu.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEKSI PROJEK (DENGAN EFEK 3D TILT KARTU) -->
+    <section id="projek" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+            <div>
+                <h2 class="text-xs uppercase tracking-widest text-indigo-400 mb-3 font-semibold">Portofolio Pilihan</h2>
+                <p class="text-3xl md:text-4xl font-bold">Karya & Pemecahan Masalah.</p>
+            </div>
+            <p class="text-slate-400 text-sm mt-4 md:mt-0 max-w-xs">Arahkan kursor ke kartu untuk melihat efek kedalaman 3D secara langsung.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- KARTU PROJEK 1 -->
+            <div class="tilt-card glass-panel rounded-3xl p-6 md:p-8 transition-all duration-300 transform-gpu" style="transform-style: preserve-3d;">
+                <div class="w-full h-64 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+                    <!-- Ganti src gambar di bawah dengan screenshot projek Anda -->
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Projek 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-70 group-hover:opacity-100">
+                    <div class="absolute top-4 right-4 glass-panel px-3 py-1 rounded-full text-xs font-semibold text-indigo-300">Skala Enterprise</div>
+                </div>
+                <div style="transform: translateZ(30px);">
+                    <div class="flex gap-2 mb-3">
+                        <span class="text-xs font-bold text-slate-400 bg-white/5 px-2.5 py-1 rounded-md">React.js</span>
+                        <span class="text-xs font-bold text-slate-400 bg-white/5 px-2.5 py-1 rounded-md">Node.js</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white">[Nama Projek Sistem 1]</h3>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Membangun ulang arsitektur sistem pencatatan inventaris yang berhasil memangkas waktu pemrosesan data gudang hingga 42%.</p>
+                    <a href="#" class="inline-flex items-center text-sm font-bold text-indigo-400 hover:text-indigo-300">
+                        Baca Studi Kasus Lengkap →
+                    </a>
+                </div>
+            </div>
+
+            <!-- KARTU PROJEK 2 -->
+            <div class="tilt-card glass-panel rounded-3xl p-6 md:p-8 transition-all duration-300 transform-gpu" style="transform-style: preserve-3d;">
+                <div class="w-full h-64 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Projek 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-70 group-hover:opacity-100">
+                    <div class="absolute top-4 right-4 glass-panel px-3 py-1 rounded-full text-xs font-semibold text-emerald-300">High Conversion</div>
+                </div>
+                <div style="transform: translateZ(30px);">
+                    <div class="flex gap-2 mb-3">
+                        <span class="text-xs font-bold text-slate-400 bg-white/5 px-2.5 py-1 rounded-md">UI/UX</span>
+                        <span class="text-xs font-bold text-slate-400 bg-white/5 px-2.5 py-1 rounded-md">Tailwind</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white">[Nama Projek Aplikasi 2]</h3>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">Merancang ulang alur pendaftaran pengguna (Onboarding Flow) yang mendongkrak rasio registrasi sukses dari 61% menjadi 88%.</p>
+                    <a href="#" class="inline-flex items-center text-sm font-bold text-indigo-400 hover:text-indigo-300">
+                        Baca Studi Kasus Lengkap →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEKSI KONTAK -->
+    <section id="kontak" class="py-32 px-6 max-w-4xl mx-auto text-center relative">
+        <div class="glass-panel p-12 md:p-20 rounded-[3rem] relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
+            
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white">Mari Diskusikan Kebutuhan Tim Anda.</h2>
+            <p class="text-slate-400 text-base md:text-lg mb-10 max-w-xl mx-auto">
+                Saya siap diuji secara teknikal maupun berdiskusi santai mengenai bagaimana saya bisa berkontribusi di perusahaan yang Anda pimpin.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="mailto:emailanda@gmail.com" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-8 py-4 rounded-full transition shadow-xl shadow-indigo-600/30 flex items-center justify-center space-x-2">
+                    <span>Kirim Email Sekarang</span>
+                    <span>↗</span>
+                </a>
+                <a href="https://wa.me/628123456789" target="_blank" class="glass-panel hover:bg-white/10 text-white font-bold px-8 py-4 rounded-full transition flex items-center justify-center space-x-2">
+                    <span>WhatsApp Saya</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-8 text-center text-xs text-slate-500">
+        <p>Dirancang & Dibangun dengan standar tinggi. © 2026 [Nama Anda].</p>
+    </footer>
+
+    <!-- SCRIPT LOGIKA 3D & INTERAKSI -->
+    <script>
+        /* 1. KODE THREE.JS UNTUK BACKGROUND 3D MENGAPUNG */
+        const canvas = document.getElementById('bg-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Membuat bentuk Geometri Icosahedron (Elegan & Futuristik)
+        const geometry = new THREE.IcosahedronGeometry(3.5, 1);
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x6366f1,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.15
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Menambahkan partikel debu kosmik
+        const particlesGeo = new THREE.BufferGeometry();
+        const particlesCount = 700;
+        const posArray = new Float32Array(particlesCount * 3);
+        for(let i=0; i<particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 20;
+        }
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMat = new THREE.PointsMaterial({ size: 0.015, color: 0x818cf8, transparent: true, opacity: 0.5 });
+        const particles = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particles);
+
+        // Pencahayaan
+        const pointLight = new THREE.PointLight(0xffffff, 1.5);
+        pointLight.position.set(2, 3, 4);
+        scene.add(pointLight);
+
+        camera.position.z = 7;
+
+        // Mouse Tracker untuk memutar objek 3D
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            // Rotasi otomatis super pelan
+            sphere.rotation.x += 0.001;
+            sphere.rotation.y += 0.002;
+            particles.rotation.y += 0.0005;
+
+            // Rotasi responsif mengikuti kursor (Interpolasi mulus)
+            targetX = mouseX * 1.2;
+            targetY = mouseY * 1.2;
+            sphere.rotation.y += (targetX - sphere.rotation.y) * 0.05;
+            sphere.rotation.x += (targetY - sphere.rotation.x) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsif saat browser di-resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        /* 2. VANILLA JS KARTU 3D TILT (Tanpa library berat) */
+        const cards = document.querySelectorAll('.tilt-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;  
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -12;
+                const rotateY = ((x - centerX) / centerX) * 12;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+
+        /* 3. GSAP ANIMASI MUNCUL SAAT LOAD */
+        gsap.from(".hero-elem", {
+            duration: 1,
+            y: 40,
+            opacity: 0,
+            stagger: 0.15,
+            ease: "power3.out",
+            delay: 0.2
+        });
+    </script>
+</body>
+</html>
