@@ -53,96 +53,115 @@
     <!-- CANVAS 3D BACKGROUND -->
     <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
 
-    <!-- NAVBAR MENGAPUNG (Vaksinasi Mobile: px-5 agar tidak tabrakan di HP) -->
-    <nav class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-5xl glass-panel rounded-full px-5 md:px-8 py-3.5 flex justify-between items-center">
-        <span class="text-base md:text-xl font-bold tracking-wider bg-gradient-to-r from-white via-slate-300 to-indigo-400 bg-clip-text text-transparent">
+    <!-- 1. DESKTOP NAVIGATION (Muncul khusus di layar PC / Tablet md ke atas) -->
+    <nav class="hidden md:flex fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl glass-panel rounded-full px-8 py-4 justify-between items-center shadow-2xl">
+        <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-white via-slate-300 to-indigo-400 bg-clip-text text-transparent">
             Masdar Helmi.
         </span>
-        <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide text-slate-400">
+        <div class="flex space-x-8 text-sm font-semibold tracking-wide text-slate-400">
             <a href="#hero" class="hover:text-white transition">01. Beranda</a>
             <a href="#keahlian" class="hover:text-white transition">02. Keahlian</a>
             <a href="#projek" class="hover:text-white transition">03. Hasil Kerja</a>
             <a href="#kontak" class="hover:text-white transition">04. Kontak</a>
         </div>
-        <a href="#kontak" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs md:text-sm font-semibold px-4 md:px-6 py-2 md:py-2.5 rounded-full transition shadow-lg shadow-indigo-600/30">
+        <a href="#kontak" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition shadow-lg shadow-indigo-600/30">
             Hubungi Saya
         </a>
     </nav>
 
+    <!-- 2. MOBILE FLOATING THUMB-DOCK (Muncul KHUSUS di HP, melayang di bawah ala Dynamic Island) -->
+    <nav class="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-sm bg-dark/85 backdrop-blur-2xl border border-white/10 rounded-full px-3 py-2 flex justify-around items-center shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+        <a href="#hero" class="flex flex-col items-center text-slate-400 hover:text-indigo-400 transition py-1 px-2">
+            <span class="text-lg leading-none">⌂</span>
+            <span class="text-[9px] font-semibold mt-1">Beranda</span>
+        </a>
+        <a href="#keahlian" class="flex flex-col items-center text-slate-400 hover:text-indigo-400 transition py-1 px-2">
+            <span class="text-lg leading-none">⚡</span>
+            <span class="text-[9px] font-semibold mt-1">Keahlian</span>
+        </a>
+        <a href="#projek" class="flex flex-col items-center text-slate-400 hover:text-indigo-400 transition py-1 px-2">
+            <span class="text-lg leading-none">✦</span>
+            <span class="text-[9px] font-semibold mt-1">Karya</span>
+        </a>
+        <a href="#kontak" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-xs px-4 py-2 rounded-full flex items-center space-x-1 shadow-lg shadow-indigo-600/30">
+            <span>↗</span>
+            <span>Kontak</span>
+        </a>
+    </nav>
+
     <!-- HERO SECTION -->
-    <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-24">
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-16 md:pt-24">
         <div class="absolute w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl -z-5"></div>
         
         <!-- FOTO PROFIL -->
         <div class="hero-elem relative mb-6 group cursor-pointer">
             <div class="absolute -inset-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-md opacity-75 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
-            <img src="asset/aku.png" alt="Masdar Helmi" class="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-slate-900 shadow-2xl transition duration-300 group-hover:scale-105">
+            <img src="asset/aku.png" alt="Masdar Helmi" class="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-slate-900 shadow-2xl transition duration-300 group-hover:scale-105">
         </div>
 
-        <div class="hero-elem inline-block glass-panel px-4 py-1.5 rounded-full text-[11px] sm:text-xs md:text-sm text-indigo-400 mb-6 border-indigo-500/20 max-w-full truncate">
-            <span class="inline-block w-2 h-2 rounded-full bg-indigo-500 animate-pulse mr-1.5"></span> 
+        <div class="hero-elem inline-block glass-panel px-4 py-1.5 rounded-full text-xs md:text-sm text-indigo-400 mb-6 border-indigo-500/20 max-w-full truncate">
+            <span class="inline-block w-2 h-2 rounded-full bg-indigo-500 animate-pulse mr-2"></span> 
             Mahasiswa Sistem Informasi | Junior Web Programmer & Desainer Grafis
         </div>
 
-        <!-- Vaksinasi Mobile: Ukuran font diatur bertingkat dari text-3xl sampai text-7xl -->
-        <h1 class="hero-elem text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mb-6 leading-[1.15]">
+        <h1 class="hero-elem text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mb-6 leading-tight">
             Menyatukan <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Logika Kode</span> dengan Estetika Visual.
         </h1>
 
-        <p class="hero-elem text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mb-10 font-normal leading-relaxed px-2">
+        <p class="hero-elem text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mb-10 font-normal leading-relaxed">
             Halo, saya <span class="text-white font-semibold">Masdar Helmi</span>. Saya seorang Junior Web Developer yang fokus membangun website dinamis, statis, dan responsif menggunakan <span class="text-indigo-300 font-semibold">Laravel & PHP maupun HTML</span>. Selain coding, saya juga mengintegrasikan kreativitas visual ke dalam proyek lewat desain grafis <span class="text-purple-300 font-semibold">(Corel Draw & Canva)</span> serta editing video <span class="text-pink-300 font-semibold">(CapCut)</span> untuk menciptakan pengalaman digital yang lengkap.
         </p>
 
-        <div class="hero-elem flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto px-4">
-            <a href="#projek" class="bg-white text-dark font-bold px-8 py-3.5 md:py-4 rounded-full hover:bg-slate-200 transition flex items-center justify-center space-x-2 group shadow-xl">
+        <div class="hero-elem flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4">
+            <a href="#projek" class="bg-white text-dark font-bold px-8 py-4 rounded-full hover:bg-slate-200 transition flex items-center justify-center space-x-2 group shadow-xl">
                 <span>Lihat Studio & Projek</span>
                 <span class="group-hover:translate-x-1 transition">→</span>
             </a>
-            <a href="#keahlian" class="glass-panel text-white font-bold px-8 py-3.5 md:py-4 rounded-full hover:bg-white/5 transition flex items-center justify-center">
+            <a href="#keahlian" class="glass-panel text-white font-bold px-8 py-4 rounded-full hover:bg-white/5 transition flex items-center justify-center">
                 Eksplorasi Skill
             </a>
         </div>
     </section>
 
     <!-- SEKSI KEAHLIAN -->
-    <section id="keahlian" class="py-24 px-5 sm:px-6 max-w-6xl mx-auto">
-        <div class="text-center mb-16 md:mb-20">
+    <section id="keahlian" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-20">
             <h2 class="text-xs uppercase tracking-widest text-indigo-400 mb-3 font-semibold">Senjata & Perlengkapan</h2>
-            <p class="text-2xl sm:text-3xl md:text-4xl font-bold">Kombinasi Logika dan Kreativitas.</p>
+            <p class="text-3xl md:text-4xl font-bold">Kombinasi Logika dan Kreativitas.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <div class="glass-panel p-6 md:p-8 rounded-3xl relative overflow-hidden group">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
                 <div class="w-12 h-12 bg-indigo-600/20 rounded-xl flex items-center justify-center text-indigo-400 text-2xl font-bold mb-6">/&gt;</div>
                 <h3 class="text-xl font-bold mb-4 text-white">Web Development</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">Membangun aplikasi web fungsional yang aman, terstruktur, dan siap pakai.</p>
-                <div class="flex flex-wrap gap-1.5">
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Laravel</span>
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">PHP / MySQL</span>
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">HTML5</span>
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Tailwind</span>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">Membangun aplikasi web fungsional yang aman, terstruktur, dan siap pakai.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Laravel</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">PHP / MySQL</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">HTML5</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">CSS3 / Tailwind</span>
                 </div>
             </div>
             
-            <div class="glass-panel p-6 md:p-8 rounded-3xl relative overflow-hidden group">
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
                 <div class="w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-400 text-2xl font-bold mb-6">🎨</div>
                 <h3 class="text-xl font-bold mb-4 text-white">Graphic Design</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">Merancang aset promosi, layout cetak digital, hingga branding media sosial.</p>
-                <div class="flex flex-wrap gap-1.5">
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Corel Draw</span>
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Canva Mastery</span>
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Vector Art</span>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">Merancang aset promosi, layout cetak digital, hingga kebutuhan branding media sosial.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Corel Draw</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Canva Architecture</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Vector Art</span>
                 </div>
             </div>
 
-            <div class="glass-panel p-6 md:p-8 rounded-3xl relative overflow-hidden group">
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
                 <div class="w-12 h-12 bg-pink-600/20 rounded-xl flex items-center justify-center text-pink-400 text-2xl font-bold mb-6">🎬</div>
                 <h3 class="text-xl font-bold mb-4 text-white">Video Production</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">Melakukan editing video kreatif berskala komersial dengan transisi dinamis.</p>
-                <div class="flex flex-wrap gap-1.5">
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">CapCut Pro</span>
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Color Grading</span>
-                    <span class="text-[11px] sm:text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Audio Sync</span>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">Melakukan editing video kreatif berskala komersial dengan transisi dan tempo dinamis.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">CapCut Pro</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Color Grading</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Audio Sync</span>
                 </div>
             </div>
         </div>
@@ -150,12 +169,12 @@
 
     <!-- SEKSI PROJEK & FILTER (TOTAL 13 KARYA) -->
     <section id="projek" class="py-24 px-5 sm:px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-14 md:mb-16">
+        <div class="text-center mb-16">
             <h2 class="text-xs uppercase tracking-widest text-indigo-400 mb-3 font-semibold">Portofolio Terpilih</h2>
-            <p class="text-2xl sm:text-4xl md:text-5xl font-bold mb-8">Studi Kasus & Pembuktian Nyata.</p>
+            <p class="text-3xl md:text-5xl font-bold mb-8">Studi Kasus & Pembuktian Nyata.</p>
             
-            <!-- TOMBOL FILTER (Vaksinasi Mobile: gap-2 dan ukuran teks fleksibel) -->
-            <div class="flex justify-center gap-2 flex-wrap px-2">
+            <!-- TOMBOL FILTER -->
+            <div class="flex justify-center gap-2 sm:gap-3 flex-wrap px-2">
                 <button onclick="filterKarya('all')" data-btn="all" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition bg-indigo-600 text-white border border-indigo-500 shadow-lg shadow-indigo-500/20">Semua Karya (13)</button>
                 <button onclick="filterKarya('web')" data-btn="web" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Web Development (6)</button>
                 <button onclick="filterKarya('desain')" data-btn="desain" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Desain Grafis (7)</button>
@@ -163,194 +182,194 @@
         </div>
 
         <!-- GRID 13 KARYA -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="karya-container">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="karya-container">
             
             <!-- 1. WEB: MOTOPART -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/motopart.jpg" alt="MotoPart" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
-                    <div class="absolute top-3 right-3 bg-indigo-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">UAS - Fullstack</div>
+                    <div class="absolute top-3 right-3 bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold">UAS - Fullstack</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Laravel</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Filament</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Filament</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">MotoPart – Spare Parts Marketplace</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">MotoPart – Spare Parts Marketplace</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Membangun aplikasi marketplace suku cadang motor terintegrasi Filament Admin Panel untuk mempermudah kontrol inventaris produk.</p>
             </div>
 
             <!-- 2. WEB: PRIMASKA -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/primaska.jpg" alt="Primaska" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
-                    <div class="absolute top-3 right-3 bg-indigo-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Internal ERP</div>
+                    <div class="absolute top-3 right-3 bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold">Internal ERP</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">PHP Core</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Tailwind</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">PHP Core</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Tailwind</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Primaska Printing ERP</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Primaska Printing ERP</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Dirancang untuk meminimalkan human error, mempercepat rekap data harian, serta menyediakan fitur pelacakan pesanan secara real-time.</p>
             </div>
 
             <!-- 3. WEB: CATERING BALUWARTI -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/nur baluwarti.jpg" alt="Catering Baluwarti" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
-                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Freelance Client</div>
+                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">Freelance Client</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Laravel</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">DomPDF Export</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">DomPDF Export</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Catering Baluwarti — Order & Ledger</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Catering Baluwarti — Order & Ledger</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Mendigitalisasi alur pemesanan katering. Mengeliminasi tabrakan booking dan mempercepat rilis nota Kontrak resmi PDF dalam hitungan detik.</p>
             </div>
 
             <!-- 4. WEB: WARMINDO PAKDHENE -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/pakdhene.jpg" alt="Warmindo Pakdhene" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
-                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Freelance Client</div>
+                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">Freelance Client</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Laravel POS</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">QR Ordering</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel POS</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">QR Ordering</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Warmindo Pakdhene QR Self-POS</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Warmindo Pakdhene QR Self-POS</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Membangun POS mandiri berbasis QR meja ala restoran besar untuk mengurai antrean kasir dan menekan kesalahan pesanan dapur hingga 0%.</p>
             </div>
 
             <!-- 5. WEB: WEKKU CATERING -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/wekku.jpg" alt="Wekku Catering" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
-                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">B2C E-Commerce</div>
+                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">B2C E-Commerce</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Laravel / PHP</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">MySQL</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel / PHP</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">MySQL</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Wekku Catering — Dynamic E-Commerce</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Wekku Catering — Dynamic E-Commerce</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Membangun platform e-commerce katering terintegrasi. Memungkinkan kustomisasi paket menu prasmanan, manajemen slot kalender, dan kalkulasi biaya otomatis.</p>
             </div>
 
             <!-- 6. WEB: SHELTER MANAHAN -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/selter.jpg" alt="Shelter Manahan E-Commerce" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
-                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Freelance Client</div>
+                    <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">Freelance Client</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Laravel</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">MySQL / PHP</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">MySQL / PHP</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Shelter Manahan — Food Court E-Commerce</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Shelter Manahan — Food Court E-Commerce</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Membangun platform e-commerce dan sistem pre-order terpusat untuk tenant kuliner Shelter Manahan guna mempermudah rekapitulasi pesanan harian.</p>
             </div>
 
             <!-- 7. DESAIN: SATE KRONYOS -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-7.jpg" alt="Sate Kronyos Pemais" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Corel Draw</div>
+                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Spatial MMT</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">F&B Out-of-Home</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Spatial MMT</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">F&B Out-of-Home</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Sate Kronyos "Pemais" Banner</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Sate Kronyos "Pemais" Banner</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Merancang spanduk luar ruang dengan kontras warna tinggi agar legibilitas tulisan langsung tertangkap oleh mata pengendara motor.</p>
             </div>
 
             <!-- 8. DESAIN: SERABI SOLO SALATIGA -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-8.jpg" alt="Serabi Solo Ny Vell" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Corel Draw</div>
+                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">POS Branding</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Traditional F&B</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">POS Branding</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Traditional F&B</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Srabi Solo Ny. Vell (Salatiga)</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Srabi Solo Ny. Vell (Salatiga)</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Re-desain identitas visual jajanan tradisional Solo di Salatiga dengan palet warna hangat guna memancarkan kesan legendaris.</p>
             </div>
 
             <!-- 9. DESAIN: SATE MBAK NANIK -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/sateeeeeee.jpg" alt="Sate Ayam Mbak Nanik" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Corel Draw</div>
+                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Outdoor Banner</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Price Lock</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Outdoor Banner</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Price Lock</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Sate Ayam Mbak Nanik</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Sate Ayam Mbak Nanik</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Pengaturan hierarki tipografi yang mengunci mata konsumen langsung pada angka Rp14.000 dan nomor kontak pemesanan.</p>
             </div>
 
             <!-- 10. DESAIN: ES DOGER -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/es doger.jpg" alt="Es Doger Pelopor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Corel Draw</div>
+                    <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Thirst Appeal</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Stand Banner</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Thirst Appeal</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Stand Banner</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Es Doger "Pelopor" Campaign</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Es Doger "Pelopor" Campaign</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Manipulasi komposisi grafis splash susu dan es batu guna memberikan efek psikologis 'melepas dahaga' secara instan.</p>
             </div>
 
             <!-- 11. DESAIN: ANTI BULLYING -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-5.jpg" alt="Stop Bullying MI Klero" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Canva Pro</div>
+                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">Canva Pro</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Public Campaign</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Flat Design</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Public Campaign</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Flat Design</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Stop Bullying — MI Klero</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Stop Bullying — MI Klero</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Merancang spanduk edukasi sekolah ramah anak dengan gaya ilustrasi hangat yang tegas menyampaikan pesan tanpa mengintimidasi.</p>
             </div>
 
             <!-- 12. DESAIN: 17AN RT 04 -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-6.jpg" alt="17an RT 04" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Canva Pro</div>
+                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">Canva Pro</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Ultrawide Layout</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Cultural</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Ultrawide Layout</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Cultural</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">Dirgahayu RI Ke-80 (Warga RT 04)</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">Dirgahayu RI Ke-80 (Warga RT 04)</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Komposisi spanduk kemerdekaan format lebar dengan menyatukan berbagai ragam ilustrasi pakaian adat Nusantara.</p>
             </div>
 
             <!-- 13. DESAIN: MTS ASWAJA -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-5 sm:p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-48 sm:h-52 bg-slate-800 rounded-2xl mb-5 sm:mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/aswaja240.jpg" alt="MTs Aswaja" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold">Canva Pro</div>
+                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">Canva Pro</div>
                 </div>
-                <div class="flex gap-1.5 mb-2">
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Eco-Theology</span>
-                    <span class="text-[11px] font-bold text-slate-400 bg-white/5 px-2 py-0.5 rounded">Clean Space</span>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Eco-Theology</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Clean Space</span>
                 </div>
-                <h3 class="text-lg sm:text-xl font-bold mb-2 text-white">1 Guru 1 Tanaman (MTs Aswaja)</h3>
+                <h3 class="text-xl font-bold mb-2 text-white">1 Guru 1 Tanaman (MTs Aswaja)</h3>
                 <p class="text-slate-400 text-xs leading-relaxed">Poster aksi lingkungan hidup sekolah. Menyeimbangkan porsi ruang kosong (white-space) guna memancarkan rasa asri.</p>
             </div>
 
         </div>
     </section>
 
-    <!-- SEKSI KONTAK (Vaksinasi Mobile: p-6 sm:p-12, email break-all, formasi 3 Tombol) -->
+    <!-- SEKSI KONTAK (Dengan Tombol GITHUB masdarhelmi23) -->
     <section id="kontak" class="py-24 sm:py-32 px-4 sm:px-6 max-w-4xl mx-auto text-center relative">
         <div class="glass-panel p-6 sm:p-12 md:p-20 rounded-3xl md:rounded-[3rem] relative overflow-hidden">
             <div class="absolute -top-24 -right-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
@@ -360,7 +379,7 @@
                 Saya sangat terbuka dan menyambut baik kesempatan untuk mengikuti tes teknis pemrograman web maupun berkontribusi dalam proyek desain visual secara profesional. Saya berharap bisa belajar dan berkembang bersama tim Anda.
             </p>
 
-            <!-- EMAIL SEBAGAI TEKS STATIS (Vaksinasi: break-all agar aman di HP 320px) -->
+            <!-- EMAIL TEKS STATIS -->
             <div class="mb-10 w-full overflow-hidden">
                 <span class="text-[11px] sm:text-xs uppercase tracking-widest text-slate-500 block mb-1.5">Alamat Email</span>
                 <span class="text-sm sm:text-base md:text-xl font-mono text-indigo-300 font-bold select-all cursor-copy bg-dark/60 px-4 sm:px-6 py-2.5 rounded-xl border border-white/5 inline-block break-all max-w-full" title="Klik untuk menyorot email">
@@ -369,9 +388,9 @@
                 <span class="text-[10px] text-slate-500 block mt-1.5">*(Klik teks email di atas untuk menyalin otomatis)*</span>
             </div>
 
-            <!-- TIGA JALUR CEPAT: GITHUB, INSTAGRAM, WHATSAPP (Urutan Logika: Code -> Persona -> Chat) -->
+            <!-- TIGA JALUR CEPAT: GITHUB, INSTAGRAM, WHATSAPP -->
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center flex-wrap">
-                <!-- Tombol GitHub (BARU!) -->
+                <!-- Tombol GitHub -->
                 <a href="https://github.com/masdarhelmi23" target="_blank" class="bg-[#161b22] hover:bg-[#0d1117] text-white border border-slate-700/80 font-bold px-6 sm:px-7 py-3.5 sm:py-4 rounded-full transition shadow-xl flex items-center justify-center space-x-2 group w-full sm:w-auto">
                     <span class="font-mono text-slate-400">&lt;/&gt;</span>
                     <span>GitHub (masdarhelmi23)</span>
@@ -393,8 +412,8 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-white/5 py-8 text-center text-xs text-slate-500">
+    <!-- FOOTER (Vaksinasi: pb-24 di HP agar tidak tertutup floating dock bawah) -->
+    <footer class="border-t border-white/5 pt-8 pb-24 md:pb-8 text-center text-xs text-slate-500">
         <p>Diproduksi secara cermat dengan mengedepankan kualitas performa. © 2026 Masdar Helmi.</p>
     </footer>
 
