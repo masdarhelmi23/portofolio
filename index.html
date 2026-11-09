@@ -42,6 +42,28 @@
             border-color: rgba(99, 102, 241, 0.4);
             box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
         }
+        /* ===== 3D VIDEO SHOWCASE ===== */
+        .stage-3d { perspective: 1400px; }
+        .video-card {
+            transform-style: preserve-3d;
+            transition: transform .25s ease-out, box-shadow .3s;
+            will-change: transform;
+            position: relative;
+        }
+        .video-card .layer-float { transform: translateZ(50px); }
+        .video-card .layer-deep { transform: translateZ(25px); }
+        .video-card video { background:#000; display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
+        .video-card .shine {
+            position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:5;
+            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.14), transparent 45%);
+            opacity:0; transition: opacity .3s;
+        }
+        .video-card:hover .shine { opacity:1; }
+        .video-card:hover { box-shadow: 0 30px 80px rgba(99,102,241,.35), 0 0 0 1px rgba(99,102,241,.5); }
+        .neon-text { text-shadow: 0 0 30px rgba(129,140,248,.55); }
+        .reveal { opacity:0; transform: translateY(50px) rotateX(8deg); transition: opacity .9s ease, transform .9s ease; }
+        .reveal.in { opacity:1; transform: none; }
+        @media (hover:none) { .video-card { transform:none !important; } }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #070709; }
         ::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 4px; }
@@ -53,8 +75,8 @@
     <!-- CANVAS 3D BACKGROUND -->
     <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
 
-    <!-- 1. DESKTOP NAVIGATION (Muncul khusus di layar PC / Tablet md ke atas) -->
-    <nav class="hidden md:flex fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl glass-panel rounded-full px-8 py-4 justify-between items-center shadow-2xl">
+    <!-- 1. DESKTOP NAVIGATION -->
+    <nav class="hidden md:flex fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-5xl glass-panel rounded-full px-8 py-4 justify-between items-center shadow-2xl">
         <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-white via-slate-300 to-indigo-400 bg-clip-text text-transparent">
             Masdar Helmi.
         </span>
@@ -69,8 +91,8 @@
         </a>
     </nav>
 
-    <!-- 2. MOBILE FLOATING THUMB-DOCK (Muncul KHUSUS di HP, melayang di bawah ala Dynamic Island) -->
-    <nav class="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-sm bg-dark/85 backdrop-blur-2xl border border-white/10 rounded-full px-3 py-2 flex justify-around items-center shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+    <!-- 2. MOBILE FLOATING THUMB-DOCK -->
+    <nav class="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-sm bg-dark/85 backdrop-blur-2xl border border-white/10 rounded-full px-3 py-2 flex justify-around items-center shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
         <a href="#hero" class="flex flex-col items-center text-slate-400 hover:text-indigo-400 transition py-1 px-2">
             <span class="text-lg leading-none">⌂</span>
             <span class="text-[9px] font-semibold mt-1">Beranda</span>
@@ -157,17 +179,18 @@
             <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
                 <div class="w-12 h-12 bg-pink-600/20 rounded-xl flex items-center justify-center text-pink-400 text-2xl font-bold mb-6">🎬</div>
                 <h3 class="text-xl font-bold mb-4 text-white">Video Production</h3>
-                <p class="text-slate-400 text-sm leading-relaxed mb-6">Melakukan editing video kreatif berskala komersial dengan transisi dan tempo dinamis.</p>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">Membuat video kreatif berskala komersial dari perpaduan AI dan editing, dengan transisi dan tempo dinamis.</p>
                 <div class="flex flex-wrap gap-2">
                     <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">CapCut Pro</span>
                     <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Color Grading</span>
                     <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Audio Sync</span>
+                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">AI Video</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SEKSI PROJEK & FILTER (TOTAL 13 KARYA) -->
+    <!-- SEKSI PROJEK & FILTER (TOTAL 17 KARYA) -->
     <section id="projek" class="py-24 px-5 sm:px-6 max-w-7xl mx-auto">
         <div class="text-center mb-16">
             <h2 class="text-xs uppercase tracking-widest text-indigo-400 mb-3 font-semibold">Portofolio Terpilih</h2>
@@ -175,14 +198,15 @@
             
             <!-- TOMBOL FILTER -->
             <div class="flex justify-center gap-2 sm:gap-3 flex-wrap px-2">
-                <button onclick="filterKarya('all')" data-btn="all" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition bg-indigo-600 text-white border border-indigo-500 shadow-lg shadow-indigo-500/20">Semua Karya (13)</button>
+                <button onclick="filterKarya('all')" data-btn="all" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition bg-indigo-600 text-white border border-indigo-500 shadow-lg shadow-indigo-500/20">Semua Karya (17)</button>
                 <button onclick="filterKarya('web')" data-btn="web" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Web Development (6)</button>
                 <button onclick="filterKarya('desain')" data-btn="desain" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Desain Grafis (7)</button>
+                <button onclick="filterKarya('video')" data-btn="video" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Video (4)</button>
             </div>
         </div>
 
-        <!-- GRID 13 KARYA -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="karya-container">
+        <!-- GRID 17 KARYA -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start" id="karya-container">
             
             <!-- 1. WEB: MOTOPART -->
             <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
@@ -366,10 +390,65 @@
                 <p class="text-slate-400 text-xs leading-relaxed">Poster aksi lingkungan hidup sekolah. Menyeimbangkan porsi ruang kosong (white-space) guna memancarkan rasa asri.</p>
             </div>
 
+
+            <!-- VIDEO 1 -->
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="video">
+                <div class="w-full aspect-[9/16] max-h-[30rem] bg-black rounded-2xl mb-6 overflow-hidden relative flex justify-center">
+                    <video controls playsinline preload="metadata" src="asset/video1.mp4" class="h-full w-auto max-w-full object-contain"></video>
+                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold pointer-events-none">AI Video</div>
+                </div>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Perpaduan AI</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">CapCut Edit</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-white">Video 1</h3>
+                <p class="text-slate-400 text-xs leading-relaxed">Video kreatif hasil perpaduan teknologi AI dan editing, dengan visual dinamis dan tempo yang dirancang agar menarik perhatian.</p>
+            </div>
+
+            <!-- VIDEO 2 -->
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="video">
+                <div class="w-full aspect-video bg-black rounded-2xl mb-6 overflow-hidden relative">
+                    <video controls playsinline preload="metadata" src="asset/video2.mp4" class="w-full h-full object-contain"></video>
+                    <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold pointer-events-none">AI Video</div>
+                </div>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Perpaduan AI</span>
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">CapCut Edit</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-white">Video 2</h3>
+                <p class="text-slate-400 text-xs leading-relaxed">Video kreatif hasil perpaduan teknologi AI dan editing, dengan visual dinamis dan tempo yang dirancang agar menarik perhatian.</p>
+            </div>
+
+            <!-- YOUTUBE cuandibedah -->
+            <a href="https://www.youtube.com/@cuandibedah" target="_blank" rel="noopener" class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300 block" data-kategori="video">
+                <div class="w-full h-52 rounded-2xl mb-6 overflow-hidden relative bg-gradient-to-br from-red-700/40 via-slate-900 to-indigo-700/30 flex items-center justify-center">
+                    <div class="w-20 h-20 rounded-3xl bg-red-600 flex items-center justify-center text-white text-4xl shadow-2xl shadow-red-600/50">▶</div>
+                    <div class="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">YouTube</div>
+                </div>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Channel</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-white">@cuandibedah</h3>
+                <p class="text-slate-400 text-xs leading-relaxed">Lihat lebih banyak karya video hasil perpaduan AI di channel ini. <span class="text-indigo-300 font-bold">Kunjungi ↗</span></p>
+            </a>
+
+            <!-- YOUTUBE mejaberdiskusi -->
+            <a href="https://www.youtube.com/@mejaberdiskusi" target="_blank" rel="noopener" class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300 block" data-kategori="video">
+                <div class="w-full h-52 rounded-2xl mb-6 overflow-hidden relative bg-gradient-to-br from-red-700/40 via-slate-900 to-indigo-700/30 flex items-center justify-center">
+                    <div class="w-20 h-20 rounded-3xl bg-red-600 flex items-center justify-center text-white text-4xl shadow-2xl shadow-red-600/50">▶</div>
+                    <div class="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">YouTube</div>
+                </div>
+                <div class="flex gap-2 mb-2">
+                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Channel</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-white">@mejaberdiskusi</h3>
+                <p class="text-slate-400 text-xs leading-relaxed">Lihat lebih banyak karya video hasil perpaduan AI di channel ini. <span class="text-indigo-300 font-bold">Kunjungi ↗</span></p>
+            </a>
+
         </div>
     </section>
 
-    <!-- SEKSI KONTAK (Dengan Tombol GITHUB masdarhelmi23) -->
+    <!-- SEKSI KONTAK -->
     <section id="kontak" class="py-24 sm:py-32 px-4 sm:px-6 max-w-4xl mx-auto text-center relative">
         <div class="glass-panel p-6 sm:p-12 md:p-20 rounded-3xl md:rounded-[3rem] relative overflow-hidden">
             <div class="absolute -top-24 -right-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
@@ -379,7 +458,6 @@
                 Saya sangat terbuka dan menyambut baik kesempatan untuk mengikuti tes teknis pemrograman web maupun berkontribusi dalam proyek desain visual secara profesional. Saya berharap bisa belajar dan berkembang bersama tim Anda.
             </p>
 
-            <!-- EMAIL TEKS STATIS -->
             <div class="mb-10 w-full overflow-hidden">
                 <span class="text-[11px] sm:text-xs uppercase tracking-widest text-slate-500 block mb-1.5">Alamat Email</span>
                 <span class="text-sm sm:text-base md:text-xl font-mono text-indigo-300 font-bold select-all cursor-copy bg-dark/60 px-4 sm:px-6 py-2.5 rounded-xl border border-white/5 inline-block break-all max-w-full" title="Klik untuk menyorot email">
@@ -388,22 +466,16 @@
                 <span class="text-[10px] text-slate-500 block mt-1.5">*(Klik teks email di atas untuk menyalin otomatis)*</span>
             </div>
 
-            <!-- TIGA JALUR CEPAT: GITHUB, INSTAGRAM, WHATSAPP -->
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center flex-wrap">
-                <!-- Tombol GitHub -->
                 <a href="https://github.com/masdarhelmi23" target="_blank" class="bg-[#161b22] hover:bg-[#0d1117] text-white border border-slate-700/80 font-bold px-6 sm:px-7 py-3.5 sm:py-4 rounded-full transition shadow-xl flex items-center justify-center space-x-2 group w-full sm:w-auto">
                     <span class="font-mono text-slate-400">&lt;/&gt;</span>
                     <span>GitHub (masdarhelmi23)</span>
                     <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition text-slate-500">↗</span>
                 </a>
-
-                <!-- Tombol Instagram -->
                 <a href="https://instagram.com/msdrhlmi_" target="_blank" class="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:opacity-90 text-white font-bold px-6 sm:px-7 py-3.5 sm:py-4 rounded-full transition shadow-xl flex items-center justify-center space-x-2 group w-full sm:w-auto">
                     <span>IG (@msdrhlmi_)</span>
                     <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition">↗</span>
                 </a>
-
-                <!-- Tombol WhatsApp -->
                 <a href="https://wa.me/6285870536367?text=Halo%20Masdar,%20saya%20tertarik%20dengan%20portofolio%20digital%20Anda..." target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 sm:px-7 py-3.5 sm:py-4 rounded-full transition shadow-xl shadow-emerald-600/20 flex items-center justify-center space-x-2 group w-full sm:w-auto">
                     <span>WA (085870536367)</span>
                     <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition">↗</span>
@@ -412,13 +484,134 @@
         </div>
     </section>
 
-    <!-- FOOTER (Vaksinasi: pb-24 di HP agar tidak tertutup floating dock bawah) -->
-    <footer class="border-t border-white/5 pt-8 pb-24 md:pb-8 text-center text-xs text-slate-500">
-        <p>Diproduksi secara cermat dengan mengedepankan kualitas performa. © 2026 Masdar Helmi.</p>
+    <!-- FOOTER (Teks ini sekarang bisa diklik sebagai pintu masuk ke halaman Admin Rahasia) -->
+    <footer class="border-t border-white/5 pt-8 pb-24 md:pb-8 text-center text-xs text-slate-500 relative z-50">
+        <p onclick="openAdminModal()" class="cursor-pointer hover:text-indigo-400 transition inline-block px-4 py-2">
+            Diproduksi secara cermat dengan mengedepankan kualitas performa. © 2026 Masdar Helmi.
+        </p>
     </footer>
 
-    <!-- SCRIPT TILT, TABS FILTER, & THREE.JS -->
+    <!-- MODAL LOGIN ADMIN RAHASIA -->
+    <div id="admin-login-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-sm rounded-3xl p-8 relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <h3 class="text-xl font-bold text-white mb-6 text-center">Akses Terbatas</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Username</label>
+                    <input type="text" id="admin-user" class="w-full bg-dark/50 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Password</label>
+                    <input type="password" id="admin-pass" class="w-full bg-dark/50 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <button onclick="verifyAdmin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl transition mt-2">Login</button>
+                <p id="login-error" class="text-red-400 text-xs text-center hidden">Username atau Password salah!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DASHBOARD ADMIN -->
+    <div id="admin-dashboard-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-8 relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <h3 class="text-2xl font-bold text-white mb-2">Dashboard Statistik</h3>
+            <p class="text-xs text-slate-400 mb-6">Data ini diambil dari Local Storage peramban.</p>
+            
+            <div class="bg-indigo-600/20 border border-indigo-500/30 rounded-2xl p-6 text-center mb-6">
+                <span class="block text-sm text-indigo-300 font-semibold mb-1">Kunjungan Hari Ini</span>
+                <span id="today-visits" class="text-5xl font-bold text-white">0</span>
+            </div>
+
+            <div class="bg-dark/50 border border-white/10 rounded-2xl p-4 max-h-40 overflow-y-auto" id="history-visits">
+                <!-- Data riwayat harian akan dimunculkan di sini lewat JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT TILT, TABS FILTER, THREE.JS, & TRACKING KUNJUNGAN -->
     <script>
+        // ==========================================
+        // 1. SISTEM PELACAK KUNJUNGAN (LOCAL STORAGE)
+        // ==========================================
+        function initVisitTracker() {
+            const today = new Date().toLocaleDateString('id-ID'); // Format: DD/MM/YYYY
+            let visitsData = JSON.parse(localStorage.getItem('portofolio_visits_data')) || {};
+            
+            // Jika tanggal hari ini belum ada di data, buat dengan nilai 0
+            if (!visitsData[today]) {
+                visitsData[today] = 0;
+            }
+
+            // Mencegah penambahan hitungan jika user hanya refresh halaman (menggunakan sessionStorage)
+            if (!sessionStorage.getItem('has_visited_today')) {
+                visitsData[today] += 1;
+                localStorage.setItem('portofolio_visits_data', JSON.stringify(visitsData));
+                sessionStorage.setItem('has_visited_today', 'true');
+            }
+        }
+        initVisitTracker(); // Jalankan saat halaman dimuat
+
+        // ==========================================
+        // 2. FUNGSI LOGIN & DASHBOARD ADMIN
+        // ==========================================
+        function openAdminModal() {
+            document.getElementById('admin-login-modal').classList.remove('hidden');
+            document.getElementById('admin-login-modal').classList.add('flex');
+            document.getElementById('login-error').classList.add('hidden');
+            document.getElementById('admin-user').value = '';
+            document.getElementById('admin-pass').value = '';
+        }
+
+        function closeModals() {
+            document.getElementById('admin-login-modal').classList.add('hidden');
+            document.getElementById('admin-login-modal').classList.remove('flex');
+            document.getElementById('admin-dashboard-modal').classList.add('hidden');
+            document.getElementById('admin-dashboard-modal').classList.remove('flex');
+        }
+
+        function verifyAdmin() {
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+
+            // Kredensial Login Rahasia (Bisa kamu ubah sesuka hati)
+            if (user === 'admin' && pass === 'admin123') {
+                document.getElementById('admin-login-modal').classList.add('hidden');
+                document.getElementById('admin-login-modal').classList.remove('flex');
+                showDashboard();
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+            document.getElementById('admin-dashboard-modal').classList.add('flex');
+
+            const today = new Date().toLocaleDateString('id-ID');
+            let visitsData = JSON.parse(localStorage.getItem('portofolio_visits_data')) || {};
+            
+            // Tampilkan jumlah hari ini
+            document.getElementById('today-visits').innerText = visitsData[today] || 0;
+
+            // Tampilkan riwayat hari-hari sebelumnya
+            const historyContainer = document.getElementById('history-visits');
+            historyContainer.innerHTML = '<span class="text-xs text-slate-500 font-bold mb-2 block uppercase">Riwayat Kunjungan Lokal</span>';
+            
+            Object.keys(visitsData).reverse().forEach(date => {
+                historyContainer.innerHTML += `
+                    <div class="flex justify-between items-center py-2 border-b border-white/5 last:border-0 text-sm">
+                        <span class="text-slate-300">${date}</span>
+                        <span class="font-bold text-indigo-400">${visitsData[date]} views</span>
+                    </div>
+                `;
+            });
+        }
+
+
+        // ==========================================
+        // 3. FUNGSI FILTER KARYA & ANIMASI LAINNYA
+        // ==========================================
         function filterKarya(kategori) {
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(b => {
@@ -465,10 +658,42 @@
         const particles = new THREE.Points(particlesGeo, particlesMat);
         scene.add(particles);
 
+        // Objek 3D tambahan: torus knot, cincin, dan kristal melayang
+        const knot = new THREE.Mesh(
+            new THREE.TorusKnotGeometry(1.1, 0.32, 160, 20),
+            new THREE.MeshStandardMaterial({ color: 0xa855f7, wireframe: true, transparent: true, opacity: 0.22 })
+        );
+        knot.position.set(-5.5, -1.5, -2);
+        scene.add(knot);
+
+        const ring = new THREE.Mesh(
+            new THREE.TorusGeometry(1.6, 0.04, 16, 100),
+            new THREE.MeshBasicMaterial({ color: 0xec4899, transparent: true, opacity: 0.45 })
+        );
+        ring.position.set(5.5, 1.5, -2);
+        scene.add(ring);
+
+        const crystals = [];
+        for (let i = 0; i < 8; i++) {
+            const c = new THREE.Mesh(
+                new THREE.OctahedronGeometry(0.25 + Math.random() * 0.3),
+                new THREE.MeshStandardMaterial({ color: 0x818cf8, wireframe: true, transparent: true, opacity: 0.35 })
+            );
+            c.position.set((Math.random() - 0.5) * 14, (Math.random() - 0.5) * 9, (Math.random() - 0.5) * 4 - 1);
+            c.userData.speed = 0.004 + Math.random() * 0.01;
+            c.userData.phase = Math.random() * Math.PI * 2;
+            crystals.push(c);
+            scene.add(c);
+        }
+
         const pointLight = new THREE.PointLight(0xffffff, 1.5);
         pointLight.position.set(2, 3, 4);
         scene.add(pointLight);
+        scene.add(new THREE.AmbientLight(0x6366f1, 0.6));
         camera.position.z = 7;
+
+        let scrollY = 0;
+        window.addEventListener('scroll', () => { scrollY = window.scrollY; });
 
         let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
         window.addEventListener('mousemove', (e) => {
@@ -483,6 +708,17 @@
             targetX = mouseX * 1.2; targetY = mouseY * 1.2;
             sphere.rotation.y += (targetX - sphere.rotation.y) * 0.05;
             sphere.rotation.x += (targetY - sphere.rotation.x) * 0.05;
+            const t = performance.now() * 0.001;
+            knot.rotation.x += 0.006; knot.rotation.y += 0.008;
+            ring.rotation.x += 0.01; ring.rotation.y += 0.006;
+            crystals.forEach(c => {
+                c.rotation.x += c.userData.speed; c.rotation.y += c.userData.speed * 1.4;
+                c.position.y += Math.sin(t + c.userData.phase) * 0.003;
+            });
+            // Parallax kamera mengikuti scroll dan mouse
+            camera.position.y += ((-scrollY * 0.0016 - mouseY * 0.6) - camera.position.y) * 0.05;
+            camera.position.x += ((mouseX * 0.8) - camera.position.x) * 0.05;
+            camera.lookAt(0, 0, 0);
             renderer.render(scene, camera);
         }
         animate();
@@ -507,6 +743,32 @@
                 card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
             });
         });
+
+        // Tilt 3D untuk kartu video + efek kilau
+        document.querySelectorAll('.tilt-video').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const r = card.getBoundingClientRect();
+                const x = e.clientX - r.left, y = e.clientY - r.top;
+                const rx = ((y - r.height / 2) / (r.height / 2)) * -9;
+                const ry = ((x - r.width / 2) / (r.width / 2)) * 9;
+                card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.03,1.03,1.03)`;
+                card.style.setProperty('--mx', (x / r.width * 100) + '%');
+                card.style.setProperty('--my', (y / r.height * 100) + '%');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+            });
+        });
+
+        // Reveal saat scroll
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // Hanya satu video yang diputar pada satu waktu
+        const vids = document.querySelectorAll('#karya-container video');
+        vids.forEach(v => v.addEventListener('play', () => vids.forEach(o => { if (o !== v) o.pause(); })));
 
         gsap.from(".hero-elem", { duration: 1, y: 40, opacity: 0, stagger: 0.15, ease: "power3.out", delay: 0.2 });
     </script>
