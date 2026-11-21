@@ -15,76 +15,84 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        dark: '#070709',
-                        accent: '#6366f1',
-                    },
-                    fontFamily: {
-                        sans: ['Space Grotesk', 'sans-serif'],
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { colors: { accent: '#6366f1' }, fontFamily: { sans: ['Space Grotesk', 'sans-serif'] } } } }
     </script>
 
     <style>
-        body { background-color: #070709; overflow-x: hidden; }
+        html { scroll-behavior: smooth; }
+        body { color:#e2e8f0; overflow-x: hidden; background-attachment: fixed;
+            background:
+              radial-gradient(60% 50% at 12% 18%, rgba(99,102,241,.42), transparent 70%),
+              radial-gradient(50% 45% at 88% 28%, rgba(217,70,239,.30), transparent 70%),
+              radial-gradient(55% 50% at 60% 90%, rgba(34,211,238,.20), transparent 70%),
+              linear-gradient(160deg,#060922 0%,#0f1038 45%,#1c0f44 100%); background-attachment: fixed; }
+        :where(.glass-panel,.pm-sheet){ color:#1e293b; }
+        section { scroll-margin-top: 90px; }
         .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,.94);
+            backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+            border: 1px solid rgba(99,102,241,.22);
+            box-shadow: 0 12px 40px -10px rgba(49,46,129,.28), 0 2px 6px rgba(49,46,129,.08);
+            transition: border-color .3s, box-shadow .3s, background .3s;
         }
-        .glass-panel:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
-        }
-        /* ===== 3D VIDEO SHOWCASE ===== */
-        .stage-3d { perspective: 1400px; }
-        .video-card {
-            transform-style: preserve-3d;
-            transition: transform .25s ease-out, box-shadow .3s;
-            will-change: transform;
-            position: relative;
-        }
-        .video-card .layer-float { transform: translateZ(50px); }
-        .video-card .layer-deep { transform: translateZ(25px); }
-        .video-card video { background:#000; display:block; width:100%; aspect-ratio:16/9; object-fit:cover; }
-        .video-card .shine {
-            position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:5;
-            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.14), transparent 45%);
-            opacity:0; transition: opacity .3s;
-        }
-        .video-card:hover .shine { opacity:1; }
-        .video-card:hover { box-shadow: 0 30px 80px rgba(99,102,241,.35), 0 0 0 1px rgba(99,102,241,.5); }
-        .neon-text { text-shadow: 0 0 30px rgba(129,140,248,.55); }
-        .reveal { opacity:0; transform: translateY(50px) rotateX(8deg); transition: opacity .9s ease, transform .9s ease; }
-        .reveal.in { opacity:1; transform: none; }
-        @media (hover:none) { .video-card { transform:none !important; } }
+        .glass-panel:hover { background: #fff; border-color: rgba(129,140,248,.55); box-shadow: 0 22px 60px -15px rgba(79,70,229,.3), inset 0 1px 0 #fff; }
+        .tilt-card { position: relative; will-change: transform; transition: transform .25s ease-out, border-color .3s, box-shadow .3s, background .3s; }
+        .tilt-card::before { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:5;
+            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(99,102,241,.13), transparent 45%); opacity:0; transition: opacity .3s; }
+        .tilt-card:hover::before { opacity: 1; }
+        @media (hover:none) { .tilt-card { transform: none !important; } }
+        #progress { position:fixed; top:0; left:0; height:3px; width:100%; transform-origin:0 50%; transform:scaleX(0); z-index:60;
+            background: linear-gradient(90deg,#6366f1,#d946ef,#fb7185); }
+        nav a.is-active:not([class*="bg-"]) { color:#4f46e5 !important; }
+        .filter-btn { will-change: transform; }
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #070709; }
-        ::-webkit-scrollbar-thumb { background: #1f1f2e; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #0b1030; }
+        ::-webkit-scrollbar-thumb { background: #4338ca; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+        .fbox{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px 10px;width:150px;background:none;border:0;cursor:pointer;border-radius:20px}
+        .fbox-svg{width:112px;height:auto;overflow:visible;filter:drop-shadow(0 10px 14px rgba(49,46,129,.2));transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+        .fbox .papers{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+        .fbox:hover .fbox-svg{transform:translateY(-6px) rotate(-2deg)}
+        .fbox:hover .papers,.fbox.is-open .papers{transform:translateY(-10px)}
+        .fbox.is-open .fbox-svg{transform:translateY(-8px) scale(1.06)}
+        .fbox-name{font-weight:700;font-size:.9rem;color:#f1f5f9;margin-top:4px;transition:color .2s}
+        .fbox-count{font-size:.78rem;color:#94a3b8}
+        .fbox:hover .fbox-name,.fbox.is-open .fbox-name{color:#fff}
+        .fbox:focus-visible{outline:3px solid #6366f1;outline-offset:2px}
+        .pm{position:fixed;inset:0;z-index:65;display:none;align-items:center;justify-content:center;padding:3vh 3vw}
+        .pm.open{display:flex}
+        .pm-backdrop{position:absolute;inset:0;background:rgba(30,27,75,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+        .pm-stage{position:relative;width:min(1180px,100%);height:min(90vh,100%)}
+        .pm-sheet{position:absolute;inset:0;border-radius:8px;background:#fffdf8;box-shadow:0 30px 80px -20px rgba(15,23,42,.55),0 1px 0 rgba(0,0,0,.05)}
+        .pm-main{display:flex;flex-direction:column;overflow:hidden}
+        .pm-main::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--ac,#6366f1);z-index:2}
+        .pm-fold{position:absolute;top:0;right:0;width:48px;height:48px;z-index:3;background:linear-gradient(225deg,#d9cfb6 50%,transparent 50%);box-shadow:-3px 3px 8px rgba(0,0,0,.12);border-bottom-left-radius:6px}
+        .pm-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 64px 14px 28px;border-bottom:2px dashed #e7dfca}
+        .pm-title{font-size:clamp(1.25rem,3vw,1.9rem);font-weight:700;color:#0f172a;line-height:1.1}
+        .pm-count{display:inline-block;margin-top:6px;font-size:.78rem;font-weight:700;color:#fff;background:var(--ac,#6366f1);padding:2px 10px;border-radius:999px;transform:rotate(-2deg)}
+        .pm-close{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;color:#334155;font-weight:700;cursor:pointer;transition:transform .2s,background .2s}
+        .pm-close:hover{background:var(--ac,#6366f1);color:#fff;transform:rotate(90deg)}
+        .pm-body{flex:1;overflow-y:auto;padding:20px 24px 32px 30px;background:#fbf7ec}
+        @media (max-width:640px){.pm{padding:1.5vh 2vw}.pm-head{padding:14px 56px 12px 22px}.pm-body{padding:14px 12px 24px 18px}.fbox{width:44%}}
     </style>
 </head>
-<body class="text-slate-100 font-sans">
+<body class="antialiased text-slate-200 font-sans">
 
+    <div id="progress"></div>
     <!-- CANVAS 3D BACKGROUND -->
     <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
 
     <!-- 1. DESKTOP NAVIGATION -->
     <nav class="hidden md:flex fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-5xl glass-panel rounded-full px-8 py-4 justify-between items-center shadow-2xl">
-        <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-white via-slate-300 to-indigo-400 bg-clip-text text-transparent">
+        <span class="text-xl font-bold tracking-wider bg-gradient-to-r from-slate-900 via-indigo-700 to-fuchsia-500 bg-clip-text text-transparent">
             Masdar Helmi.
         </span>
-        <div class="flex space-x-8 text-sm font-semibold tracking-wide text-slate-400">
-            <a href="#hero" class="hover:text-white transition">01. Beranda</a>
-            <a href="#keahlian" class="hover:text-white transition">02. Keahlian</a>
-            <a href="#projek" class="hover:text-white transition">03. Hasil Kerja</a>
-            <a href="#kontak" class="hover:text-white transition">04. Kontak</a>
+        <div class="flex space-x-8 text-sm font-semibold tracking-wide text-slate-600">
+            <a href="#hero" class="hover:text-indigo-600 transition">01. Beranda</a>
+            <a href="#keahlian" class="hover:text-indigo-600 transition">02. Keahlian</a>
+            <a href="#projek" class="hover:text-indigo-600 transition">03. Hasil Kerja</a>
+            <a href="#kontak" class="hover:text-indigo-600 transition">04. Kontak</a>
         </div>
         <a href="#kontak" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition shadow-lg shadow-indigo-600/30">
             Hubungi Saya
@@ -92,16 +100,16 @@
     </nav>
 
     <!-- 2. MOBILE FLOATING THUMB-DOCK -->
-    <nav class="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-sm bg-dark/85 backdrop-blur-2xl border border-white/10 rounded-full px-3 py-2 flex justify-around items-center shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
-        <a href="#hero" class="flex flex-col items-center text-slate-400 hover:text-indigo-400 transition py-1 px-2">
+    <nav class="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-sm bg-white/85 backdrop-blur-2xl border border-slate-200 rounded-full px-3 py-2 flex justify-around items-center shadow-[0_10px_35px_rgba(99,102,241,0.25)]">
+        <a href="#hero" class="flex flex-col items-center text-slate-600 hover:text-indigo-600 transition py-1 px-2">
             <span class="text-lg leading-none">⌂</span>
             <span class="text-[9px] font-semibold mt-1">Beranda</span>
         </a>
-        <a href="#keahlian" class="flex flex-col items-center text-slate-400 hover:text-indigo-400 transition py-1 px-2">
+        <a href="#keahlian" class="flex flex-col items-center text-slate-600 hover:text-indigo-600 transition py-1 px-2">
             <span class="text-lg leading-none">⚡</span>
             <span class="text-[9px] font-semibold mt-1">Keahlian</span>
         </a>
-        <a href="#projek" class="flex flex-col items-center text-slate-400 hover:text-indigo-400 transition py-1 px-2">
+        <a href="#projek" class="flex flex-col items-center text-slate-600 hover:text-indigo-600 transition py-1 px-2">
             <span class="text-lg leading-none">✦</span>
             <span class="text-[9px] font-semibold mt-1">Karya</span>
         </a>
@@ -113,33 +121,33 @@
 
     <!-- HERO SECTION -->
     <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-16 md:pt-24">
-        <div class="absolute w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl -z-5"></div>
+        <div class="absolute w-96 h-96 bg-indigo-500/25 rounded-full blur-3xl -z-5"></div>
         
         <!-- FOTO PROFIL -->
         <div class="hero-elem relative mb-6 group cursor-pointer">
             <div class="absolute -inset-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-md opacity-75 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
-            <img src="asset/aku.png" alt="Masdar Helmi" class="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-slate-900 shadow-2xl transition duration-300 group-hover:scale-105">
+            <img src="asset/aku.png" alt="Masdar Helmi" class="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-white shadow-2xl transition duration-300 group-hover:scale-105">
         </div>
 
-        <div class="hero-elem inline-block glass-panel px-4 py-1.5 rounded-full text-xs md:text-sm text-indigo-400 mb-6 border-indigo-500/20 max-w-full truncate">
+        <div class="hero-elem inline-block glass-panel px-4 py-1.5 rounded-full text-xs md:text-sm text-indigo-600 mb-6 border-indigo-200 max-w-full truncate">
             <span class="inline-block w-2 h-2 rounded-full bg-indigo-500 animate-pulse mr-2"></span> 
             Mahasiswa Sistem Informasi | Junior Web Programmer & Desainer Grafis
         </div>
 
         <h1 class="hero-elem text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl mb-6 leading-tight">
-            Menyatukan <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Logika Kode</span> dengan Estetika Visual.
+            Menyatukan <span class="bg-gradient-to-r from-sky-300 via-fuchsia-300 to-amber-200 bg-clip-text text-transparent">Logika Kode</span> dengan Estetika Visual.
         </h1>
 
-        <p class="hero-elem text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mb-10 font-normal leading-relaxed">
+        <p class="hero-elem text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mb-10 font-normal leading-relaxed">
             Halo, saya <span class="text-white font-semibold">Masdar Helmi</span>. Saya seorang Junior Web Developer yang fokus membangun website dinamis, statis, dan responsif menggunakan <span class="text-indigo-300 font-semibold">Laravel & PHP maupun HTML</span>. Selain coding, saya juga mengintegrasikan kreativitas visual ke dalam proyek lewat desain grafis <span class="text-purple-300 font-semibold">(Corel Draw & Canva)</span> serta editing video <span class="text-pink-300 font-semibold">(CapCut)</span> untuk menciptakan pengalaman digital yang lengkap.
         </p>
 
         <div class="hero-elem flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4">
-            <a href="#projek" class="bg-white text-dark font-bold px-8 py-4 rounded-full hover:bg-slate-200 transition flex items-center justify-center space-x-2 group shadow-xl">
+            <a href="#projek" class="bg-white text-slate-900 font-bold px-8 py-4 rounded-full hover:bg-indigo-200 transition flex items-center justify-center space-x-2 group shadow-xl">
                 <span>Lihat Studio & Projek</span>
                 <span class="group-hover:translate-x-1 transition">→</span>
             </a>
-            <a href="#keahlian" class="glass-panel text-white font-bold px-8 py-4 rounded-full hover:bg-white/5 transition flex items-center justify-center">
+            <a href="#keahlian" class="glass-panel text-slate-900 font-bold px-8 py-4 rounded-full hover:bg-white transition flex items-center justify-center">
                 Eksplorasi Skill
             </a>
         </div>
@@ -148,43 +156,43 @@
     <!-- SEKSI KEAHLIAN -->
     <section id="keahlian" class="py-24 px-6 max-w-6xl mx-auto">
         <div class="text-center mb-20">
-            <h2 class="text-xs uppercase tracking-widest text-indigo-400 mb-3 font-semibold">Senjata & Perlengkapan</h2>
+            <h2 class="text-xs uppercase tracking-widest text-indigo-300 mb-3 font-semibold">Senjata & Perlengkapan</h2>
             <p class="text-3xl md:text-4xl font-bold">Kombinasi Logika dan Kreativitas.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
-                <div class="w-12 h-12 bg-indigo-600/20 rounded-xl flex items-center justify-center text-indigo-400 text-2xl font-bold mb-6">/&gt;</div>
-                <h3 class="text-xl font-bold mb-4 text-white">Web Development</h3>
-                <p class="text-slate-400 text-sm leading-relaxed mb-6">Membangun aplikasi web fungsional yang aman, terstruktur, dan siap pakai.</p>
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group tilt-card">
+                <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 text-2xl font-bold mb-6">/&gt;</div>
+                <h3 class="text-xl font-bold mb-4 text-slate-900">Web Development</h3>
+                <p class="text-slate-600 text-sm leading-relaxed mb-6">Membangun aplikasi web fungsional yang aman, terstruktur, dan siap pakai.</p>
                 <div class="flex flex-wrap gap-2">
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Laravel</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">PHP / MySQL</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">HTML5</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">CSS3 / Tailwind</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">Laravel</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">PHP / MySQL</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">HTML5</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">CSS3 / Tailwind</span>
                 </div>
             </div>
             
-            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
-                <div class="w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-400 text-2xl font-bold mb-6">🎨</div>
-                <h3 class="text-xl font-bold mb-4 text-white">Graphic Design</h3>
-                <p class="text-slate-400 text-sm leading-relaxed mb-6">Merancang aset promosi, layout cetak digital, hingga kebutuhan branding media sosial.</p>
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group tilt-card">
+                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-2xl font-bold mb-6">🎨</div>
+                <h3 class="text-xl font-bold mb-4 text-slate-900">Graphic Design</h3>
+                <p class="text-slate-600 text-sm leading-relaxed mb-6">Merancang aset promosi, layout cetak digital, hingga kebutuhan branding media sosial.</p>
                 <div class="flex flex-wrap gap-2">
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Corel Draw</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Canva Architecture</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Vector Art</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">Corel Draw</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">Canva Architecture</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">Vector Art</span>
                 </div>
             </div>
 
-            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
-                <div class="w-12 h-12 bg-pink-600/20 rounded-xl flex items-center justify-center text-pink-400 text-2xl font-bold mb-6">🎬</div>
-                <h3 class="text-xl font-bold mb-4 text-white">Video Production</h3>
-                <p class="text-slate-400 text-sm leading-relaxed mb-6">Membuat video kreatif berskala komersial dari perpaduan AI dan editing, dengan transisi dan tempo dinamis.</p>
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group tilt-card">
+                <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center text-pink-600 text-2xl font-bold mb-6">🎬</div>
+                <h3 class="text-xl font-bold mb-4 text-slate-900">Video Production</h3>
+                <p class="text-slate-600 text-sm leading-relaxed mb-6">Membuat video kreatif berskala komersial dari perpaduan AI dan editing, dengan transisi dan tempo dinamis.</p>
                 <div class="flex flex-wrap gap-2">
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">CapCut Pro</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Color Grading</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">Audio Sync</span>
-                    <span class="text-xs font-semibold text-slate-300 bg-white/5 px-3 py-1 rounded-full">AI Video</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">CapCut Pro</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">Color Grading</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">Audio Sync</span>
+                    <span class="text-xs font-semibold text-slate-700 bg-indigo-100 px-3 py-1 rounded-full">AI Video</span>
                 </div>
             </div>
         </div>
@@ -193,15 +201,80 @@
     <!-- SEKSI PROJEK & FILTER (TOTAL 17 KARYA) -->
     <section id="projek" class="py-24 px-5 sm:px-6 max-w-7xl mx-auto">
         <div class="text-center mb-16">
-            <h2 class="text-xs uppercase tracking-widest text-indigo-400 mb-3 font-semibold">Portofolio Terpilih</h2>
+            <h2 class="text-xs uppercase tracking-widest text-indigo-300 mb-3 font-semibold">Portofolio Terpilih</h2>
             <p class="text-3xl md:text-5xl font-bold mb-8">Studi Kasus & Pembuktian Nyata.</p>
             
             <!-- TOMBOL FILTER -->
-            <div class="flex justify-center gap-2 sm:gap-3 flex-wrap px-2">
-                <button onclick="filterKarya('all')" data-btn="all" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition bg-indigo-600 text-white border border-indigo-500 shadow-lg shadow-indigo-500/20">Semua Karya (17)</button>
-                <button onclick="filterKarya('web')" data-btn="web" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Web Development (6)</button>
-                <button onclick="filterKarya('desain')" data-btn="desain" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Desain Grafis (7)</button>
-                <button onclick="filterKarya('video')" data-btn="video" class="filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white">Video (4)</button>
+            <p class="text-sm text-slate-300 mb-4">Pilih salah satu map arsip untuk membuka isinya.</p>
+            <div class="flex justify-center gap-2 sm:gap-5 flex-wrap px-2">
+                <button onclick="filterKarya('all')" data-btn="all" class="fbox" style="--c1:#d9531e;--c2:#9a3412;--c3:#4a1a09" aria-label="Buka map Semua Karya">
+                    <svg viewBox="0 0 120 136" class="fbox-svg" aria-hidden="true">
+                        <ellipse cx="60" cy="128" rx="44" ry="6" fill="rgba(15,23,42,.16)"/>
+                        <polygon points="16,56 60,36 104,56 60,76" style="fill:var(--c3)"/>
+                        <g class="papers">
+                            <polygon points="30,82 32,30 66,13 66,78" fill="#f1e2bf"/>
+                            <polygon points="44,84 47,22 84,9 82,80" fill="#fffaf0"/>
+                            <polygon points="58,84 66,26 101,18 98,80" fill="#e8d4a6"/>
+                            <path d="M52 34l24-9M52 42l24-9M52 50l24-9" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+                        </g>
+                        <polygon points="16,56 60,76 60,122 16,102" style="fill:var(--c1)"/>
+                        <polygon points="60,76 104,56 104,102 60,122" style="fill:var(--c2)"/>
+                        <polygon points="24,86 46,96 46,108 24,98" fill="#fff"/>
+                        <path d="M28 91l14 6.5" stroke="#cbd5e1" stroke-width="2.4"/>
+                    </svg>
+                    <span class="fbox-name">Semua Karya</span><span class="fbox-count">(17)</span>
+                </button>
+                <button onclick="filterKarya('web')" data-btn="web" class="fbox" style="--c1:#4f7fd0;--c2:#2f5496;--c3:#1b3566" aria-label="Buka map Web Development">
+                    <svg viewBox="0 0 120 136" class="fbox-svg" aria-hidden="true">
+                        <ellipse cx="60" cy="128" rx="44" ry="6" fill="rgba(15,23,42,.16)"/>
+                        <polygon points="16,56 60,36 104,56 60,76" style="fill:var(--c3)"/>
+                        <g class="papers">
+                            <polygon points="30,82 32,30 66,13 66,78" fill="#f1e2bf"/>
+                            <polygon points="44,84 47,22 84,9 82,80" fill="#fffaf0"/>
+                            <polygon points="58,84 66,26 101,18 98,80" fill="#e8d4a6"/>
+                            <path d="M52 34l24-9M52 42l24-9M52 50l24-9" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+                        </g>
+                        <polygon points="16,56 60,76 60,122 16,102" style="fill:var(--c1)"/>
+                        <polygon points="60,76 104,56 104,102 60,122" style="fill:var(--c2)"/>
+                        <polygon points="24,86 46,96 46,108 24,98" fill="#fff"/>
+                        <path d="M28 91l14 6.5" stroke="#cbd5e1" stroke-width="2.4"/>
+                    </svg>
+                    <span class="fbox-name">Web Development</span><span class="fbox-count">(6)</span>
+                </button>
+                <button onclick="filterKarya('desain')" data-btn="desain" class="fbox" style="--c1:#9b6cf0;--c2:#6d3fc4;--c3:#3e1f82" aria-label="Buka map Desain Grafis">
+                    <svg viewBox="0 0 120 136" class="fbox-svg" aria-hidden="true">
+                        <ellipse cx="60" cy="128" rx="44" ry="6" fill="rgba(15,23,42,.16)"/>
+                        <polygon points="16,56 60,36 104,56 60,76" style="fill:var(--c3)"/>
+                        <g class="papers">
+                            <polygon points="30,82 32,30 66,13 66,78" fill="#f1e2bf"/>
+                            <polygon points="44,84 47,22 84,9 82,80" fill="#fffaf0"/>
+                            <polygon points="58,84 66,26 101,18 98,80" fill="#e8d4a6"/>
+                            <path d="M52 34l24-9M52 42l24-9M52 50l24-9" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+                        </g>
+                        <polygon points="16,56 60,76 60,122 16,102" style="fill:var(--c1)"/>
+                        <polygon points="60,76 104,56 104,102 60,122" style="fill:var(--c2)"/>
+                        <polygon points="24,86 46,96 46,108 24,98" fill="#fff"/>
+                        <path d="M28 91l14 6.5" stroke="#cbd5e1" stroke-width="2.4"/>
+                    </svg>
+                    <span class="fbox-name">Desain Grafis</span><span class="fbox-count">(7)</span>
+                </button>
+                <button onclick="filterKarya('video')" data-btn="video" class="fbox" style="--c1:#14b8a6;--c2:#0f766e;--c3:#064e46" aria-label="Buka map Video">
+                    <svg viewBox="0 0 120 136" class="fbox-svg" aria-hidden="true">
+                        <ellipse cx="60" cy="128" rx="44" ry="6" fill="rgba(15,23,42,.16)"/>
+                        <polygon points="16,56 60,36 104,56 60,76" style="fill:var(--c3)"/>
+                        <g class="papers">
+                            <polygon points="30,82 32,30 66,13 66,78" fill="#f1e2bf"/>
+                            <polygon points="44,84 47,22 84,9 82,80" fill="#fffaf0"/>
+                            <polygon points="58,84 66,26 101,18 98,80" fill="#e8d4a6"/>
+                            <path d="M52 34l24-9M52 42l24-9M52 50l24-9" stroke="#cbd5e1" stroke-width="2" fill="none"/>
+                        </g>
+                        <polygon points="16,56 60,76 60,122 16,102" style="fill:var(--c1)"/>
+                        <polygon points="60,76 104,56 104,102 60,122" style="fill:var(--c2)"/>
+                        <polygon points="24,86 46,96 46,108 24,98" fill="#fff"/>
+                        <path d="M28 91l14 6.5" stroke="#cbd5e1" stroke-width="2.4"/>
+                    </svg>
+                    <span class="fbox-name">Video</span><span class="fbox-count">(4)</span>
+                </button>
             </div>
         </div>
 
@@ -209,240 +282,240 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start" id="karya-container">
             
             <!-- 1. WEB: MOTOPART -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
-                    <img src="asset/motopart.jpg" alt="MotoPart" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="web">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
+                    <img src="asset/motopart.jpg" alt="MotoPart" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold">UAS - Fullstack</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Filament</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Laravel</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Filament</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">MotoPart – Spare Parts Marketplace</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Membangun aplikasi marketplace suku cadang motor terintegrasi Filament Admin Panel untuk mempermudah kontrol inventaris produk.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">MotoPart – Spare Parts Marketplace</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Membangun aplikasi marketplace suku cadang motor terintegrasi Filament Admin Panel untuk mempermudah kontrol inventaris produk.</p>
             </div>
 
             <!-- 2. WEB: PRIMASKA -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
-                    <img src="asset/primaska.jpg" alt="Primaska" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="web">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
+                    <img src="asset/primaska.jpg" alt="Primaska" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold">Internal ERP</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">PHP Core</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Tailwind</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">PHP Core</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Tailwind</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Primaska Printing ERP</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Dirancang untuk meminimalkan human error, mempercepat rekap data harian, serta menyediakan fitur pelacakan pesanan secara real-time.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Primaska Printing ERP</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Dirancang untuk meminimalkan human error, mempercepat rekap data harian, serta menyediakan fitur pelacakan pesanan secara real-time.</p>
             </div>
 
             <!-- 3. WEB: CATERING BALUWARTI -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
-                    <img src="asset/nur baluwarti.jpg" alt="Catering Baluwarti" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="web">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
+                    <img src="asset/nur baluwarti.jpg" alt="Catering Baluwarti" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">Freelance Client</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">DomPDF Export</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Laravel</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">DomPDF Export</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Catering Baluwarti — Order & Ledger</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Mendigitalisasi alur pemesanan katering. Mengeliminasi tabrakan booking dan mempercepat rilis nota Kontrak resmi PDF dalam hitungan detik.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Catering Baluwarti — Order & Ledger</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Mendigitalisasi alur pemesanan katering. Mengeliminasi tabrakan booking dan mempercepat rilis nota Kontrak resmi PDF dalam hitungan detik.</p>
             </div>
 
             <!-- 4. WEB: WARMINDO PAKDHENE -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
-                    <img src="asset/pakdhene.jpg" alt="Warmindo Pakdhene" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="web">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
+                    <img src="asset/pakdhene.jpg" alt="Warmindo Pakdhene" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">Freelance Client</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel POS</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">QR Ordering</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Laravel POS</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">QR Ordering</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Warmindo Pakdhene QR Self-POS</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Membangun POS mandiri berbasis QR meja ala restoran besar untuk mengurai antrean kasir dan menekan kesalahan pesanan dapur hingga 0%.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Warmindo Pakdhene QR Self-POS</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Membangun POS mandiri berbasis QR meja ala restoran besar untuk mengurai antrean kasir dan menekan kesalahan pesanan dapur hingga 0%.</p>
             </div>
 
             <!-- 5. WEB: WEKKU CATERING -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
-                    <img src="asset/wekku.jpg" alt="Wekku Catering" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="web">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
+                    <img src="asset/wekku.jpg" alt="Wekku Catering" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">B2C E-Commerce</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel / PHP</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">MySQL</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Laravel / PHP</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">MySQL</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Wekku Catering — Dynamic E-Commerce</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Membangun platform e-commerce katering terintegrasi. Memungkinkan kustomisasi paket menu prasmanan, manajemen slot kalender, dan kalkulasi biaya otomatis.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Wekku Catering — Dynamic E-Commerce</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Membangun platform e-commerce katering terintegrasi. Memungkinkan kustomisasi paket menu prasmanan, manajemen slot kalender, dan kalkulasi biaya otomatis.</p>
             </div>
 
             <!-- 6. WEB: SHELTER MANAHAN -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="web">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
-                    <img src="asset/selter.jpg" alt="Shelter Manahan E-Commerce" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="web">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
+                    <img src="asset/selter.jpg" alt="Shelter Manahan E-Commerce" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold">Freelance Client</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Laravel</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">MySQL / PHP</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Laravel</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">MySQL / PHP</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Shelter Manahan — Food Court E-Commerce</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Membangun platform e-commerce dan sistem pre-order terpusat untuk tenant kuliner Shelter Manahan guna mempermudah rekapitulasi pesanan harian.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Shelter Manahan — Food Court E-Commerce</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Membangun platform e-commerce dan sistem pre-order terpusat untuk tenant kuliner Shelter Manahan guna mempermudah rekapitulasi pesanan harian.</p>
             </div>
 
             <!-- 7. DESAIN: SATE KRONYOS -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-7.jpg" alt="Sate Kronyos Pemais" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Spatial MMT</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">F&B Out-of-Home</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Spatial MMT</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">F&B Out-of-Home</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Sate Kronyos "Pemais" Banner</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Merancang spanduk luar ruang dengan kontras warna tinggi agar legibilitas tulisan langsung tertangkap oleh mata pengendara motor.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Sate Kronyos "Pemais" Banner</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Merancang spanduk luar ruang dengan kontras warna tinggi agar legibilitas tulisan langsung tertangkap oleh mata pengendara motor.</p>
             </div>
 
             <!-- 8. DESAIN: SERABI SOLO SALATIGA -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-8.jpg" alt="Serabi Solo Ny Vell" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">POS Branding</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Traditional F&B</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">POS Branding</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Traditional F&B</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Srabi Solo Ny. Vell (Salatiga)</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Re-desain identitas visual jajanan tradisional Solo di Salatiga dengan palet warna hangat guna memancarkan kesan legendaris.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Srabi Solo Ny. Vell (Salatiga)</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Re-desain identitas visual jajanan tradisional Solo di Salatiga dengan palet warna hangat guna memancarkan kesan legendaris.</p>
             </div>
 
             <!-- 9. DESAIN: SATE MBAK NANIK -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/sateeeeeee.jpg" alt="Sate Ayam Mbak Nanik" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Outdoor Banner</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Price Lock</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Outdoor Banner</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Price Lock</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Sate Ayam Mbak Nanik</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Pengaturan hierarki tipografi yang mengunci mata konsumen langsung pada angka Rp14.000 dan nomor kontak pemesanan.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Sate Ayam Mbak Nanik</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Pengaturan hierarki tipografi yang mengunci mata konsumen langsung pada angka Rp14.000 dan nomor kontak pemesanan.</p>
             </div>
 
             <!-- 10. DESAIN: ES DOGER -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/es doger.jpg" alt="Es Doger Pelopor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">Corel Draw</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Thirst Appeal</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Stand Banner</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Thirst Appeal</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Stand Banner</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Es Doger "Pelopor" Campaign</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Manipulasi komposisi grafis splash susu dan es batu guna memberikan efek psikologis 'melepas dahaga' secara instan.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Es Doger "Pelopor" Campaign</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Manipulasi komposisi grafis splash susu dan es batu guna memberikan efek psikologis 'melepas dahaga' secara instan.</p>
             </div>
 
             <!-- 11. DESAIN: ANTI BULLYING -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-5.jpg" alt="Stop Bullying MI Klero" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">Canva Pro</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Public Campaign</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Flat Design</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Public Campaign</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Flat Design</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Stop Bullying — MI Klero</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Merancang spanduk edukasi sekolah ramah anak dengan gaya ilustrasi hangat yang tegas menyampaikan pesan tanpa mengintimidasi.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Stop Bullying — MI Klero</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Merancang spanduk edukasi sekolah ramah anak dengan gaya ilustrasi hangat yang tegas menyampaikan pesan tanpa mengintimidasi.</p>
             </div>
 
             <!-- 12. DESAIN: 17AN RT 04 -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/banner-6.jpg" alt="17an RT 04" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">Canva Pro</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Ultrawide Layout</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Cultural</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Ultrawide Layout</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Cultural</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Dirgahayu RI Ke-80 (Warga RT 04)</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Komposisi spanduk kemerdekaan format lebar dengan menyatukan berbagai ragam ilustrasi pakaian adat Nusantara.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Dirgahayu RI Ke-80 (Warga RT 04)</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Komposisi spanduk kemerdekaan format lebar dengan menyatukan berbagai ragam ilustrasi pakaian adat Nusantara.</p>
             </div>
 
             <!-- 13. DESAIN: MTS ASWAJA -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="desain">
-                <div class="w-full h-52 bg-slate-800 rounded-2xl mb-6 overflow-hidden relative group">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="desain">
+                <div class="w-full h-52 bg-slate-100 rounded-2xl mb-6 overflow-hidden relative group">
                     <img src="asset/aswaja240.jpg" alt="MTs Aswaja" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold">Canva Pro</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Eco-Theology</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Clean Space</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Eco-Theology</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Clean Space</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">1 Guru 1 Tanaman (MTs Aswaja)</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Poster aksi lingkungan hidup sekolah. Menyeimbangkan porsi ruang kosong (white-space) guna memancarkan rasa asri.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">1 Guru 1 Tanaman (MTs Aswaja)</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Poster aksi lingkungan hidup sekolah. Menyeimbangkan porsi ruang kosong (white-space) guna memancarkan rasa asri.</p>
             </div>
 
 
             <!-- VIDEO 1 -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="video">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="video">
                 <div class="w-full aspect-[9/16] max-h-[30rem] bg-black rounded-2xl mb-6 overflow-hidden relative flex justify-center">
                     <video controls playsinline preload="metadata" src="asset/video1.mp4" class="h-full w-auto max-w-full object-contain"></video>
                     <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold pointer-events-none">AI Video</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Perpaduan AI</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">CapCut Edit</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Perpaduan AI</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">CapCut Edit</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Video 1</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Video kreatif hasil perpaduan teknologi AI dan editing, dengan visual dinamis dan tempo yang dirancang agar menarik perhatian.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Video 1</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Video kreatif hasil perpaduan teknologi AI dan editing, dengan visual dinamis dan tempo yang dirancang agar menarik perhatian.</p>
             </div>
 
             <!-- VIDEO 2 -->
-            <div class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300" data-kategori="video">
+            <div class="karya-card tilt-card glass-panel rounded-3xl p-6" data-kategori="video">
                 <div class="w-full aspect-video bg-black rounded-2xl mb-6 overflow-hidden relative">
                     <video controls playsinline preload="metadata" src="asset/video2.mp4" class="w-full h-full object-contain"></video>
                     <div class="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold pointer-events-none">AI Video</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Perpaduan AI</span>
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">CapCut Edit</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Perpaduan AI</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">CapCut Edit</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">Video 2</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Video kreatif hasil perpaduan teknologi AI dan editing, dengan visual dinamis dan tempo yang dirancang agar menarik perhatian.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">Video 2</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Video kreatif hasil perpaduan teknologi AI dan editing, dengan visual dinamis dan tempo yang dirancang agar menarik perhatian.</p>
             </div>
 
             <!-- YOUTUBE cuandibedah -->
-            <a href="https://www.youtube.com/@cuandibedah" target="_blank" rel="noopener" class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300 block" data-kategori="video">
-                <div class="w-full h-52 rounded-2xl mb-6 overflow-hidden relative bg-gradient-to-br from-red-700/40 via-slate-900 to-indigo-700/30 flex items-center justify-center">
+            <a href="https://www.youtube.com/@cuandibedah" target="_blank" rel="noopener" class="karya-card tilt-card glass-panel rounded-3xl p-6 block" data-kategori="video">
+                <div class="w-full h-52 rounded-2xl mb-6 overflow-hidden relative bg-gradient-to-br from-red-100 via-white to-indigo-100 flex items-center justify-center">
                     <div class="w-20 h-20 rounded-3xl bg-red-600 flex items-center justify-center text-white text-4xl shadow-2xl shadow-red-600/50">▶</div>
                     <div class="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">YouTube</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Channel</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Channel</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">@cuandibedah</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Lihat lebih banyak karya video hasil perpaduan AI di channel ini. <span class="text-indigo-300 font-bold">Kunjungi ↗</span></p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">@cuandibedah</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Lihat lebih banyak karya video hasil perpaduan AI di channel ini. <span class="text-indigo-600 font-bold">Kunjungi ↗</span></p>
             </a>
 
             <!-- YOUTUBE mejaberdiskusi -->
-            <a href="https://www.youtube.com/@mejaberdiskusi" target="_blank" rel="noopener" class="karya-card tilt-card glass-panel rounded-3xl p-6 transition-all duration-300 block" data-kategori="video">
-                <div class="w-full h-52 rounded-2xl mb-6 overflow-hidden relative bg-gradient-to-br from-red-700/40 via-slate-900 to-indigo-700/30 flex items-center justify-center">
+            <a href="https://www.youtube.com/@mejaberdiskusi" target="_blank" rel="noopener" class="karya-card tilt-card glass-panel rounded-3xl p-6 block" data-kategori="video">
+                <div class="w-full h-52 rounded-2xl mb-6 overflow-hidden relative bg-gradient-to-br from-red-100 via-white to-indigo-100 flex items-center justify-center">
                     <div class="w-20 h-20 rounded-3xl bg-red-600 flex items-center justify-center text-white text-4xl shadow-2xl shadow-red-600/50">▶</div>
                     <div class="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">YouTube</div>
                 </div>
                 <div class="flex gap-2 mb-2">
-                    <span class="text-xs font-bold text-slate-400 bg-white/5 px-2 py-1 rounded">Channel</span>
+                    <span class="text-xs font-bold text-slate-600 bg-indigo-100 px-2 py-1 rounded">Channel</span>
                 </div>
-                <h3 class="text-xl font-bold mb-2 text-white">@mejaberdiskusi</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Lihat lebih banyak karya video hasil perpaduan AI di channel ini. <span class="text-indigo-300 font-bold">Kunjungi ↗</span></p>
+                <h3 class="text-xl font-bold mb-2 text-slate-900">@mejaberdiskusi</h3>
+                <p class="text-slate-600 text-xs leading-relaxed">Lihat lebih banyak karya video hasil perpaduan AI di channel ini. <span class="text-indigo-600 font-bold">Kunjungi ↗</span></p>
             </a>
 
         </div>
@@ -451,26 +524,26 @@
     <!-- SEKSI KONTAK -->
     <section id="kontak" class="py-24 sm:py-32 px-4 sm:px-6 max-w-4xl mx-auto text-center relative">
         <div class="glass-panel p-6 sm:p-12 md:p-20 rounded-3xl md:rounded-[3rem] relative overflow-hidden">
-            <div class="absolute -top-24 -right-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -top-24 -right-24 w-72 h-72 bg-fuchsia-300/40 rounded-full blur-3xl"></div>
             
-            <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 text-white">Tertarik Menambahkan Energi Baru ke Tim Anda?</h2>
-            <p class="text-slate-400 text-xs sm:text-sm md:text-lg mb-8 max-w-xl mx-auto px-1">
+            <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 text-slate-900">Tertarik Menambahkan Energi Baru ke Tim Anda?</h2>
+            <p class="text-slate-600 text-xs sm:text-sm md:text-lg mb-8 max-w-xl mx-auto px-1">
                 Saya sangat terbuka dan menyambut baik kesempatan untuk mengikuti tes teknis pemrograman web maupun berkontribusi dalam proyek desain visual secara profesional. Saya berharap bisa belajar dan berkembang bersama tim Anda.
             </p>
 
             <div class="mb-10 w-full overflow-hidden">
-                <span class="text-[11px] sm:text-xs uppercase tracking-widest text-slate-500 block mb-1.5">Alamat Email</span>
-                <span class="text-sm sm:text-base md:text-xl font-mono text-indigo-300 font-bold select-all cursor-copy bg-dark/60 px-4 sm:px-6 py-2.5 rounded-xl border border-white/5 inline-block break-all max-w-full" title="Klik untuk menyorot email">
+                <span class="text-[11px] sm:text-xs uppercase tracking-widest text-slate-600 block mb-1.5">Alamat Email</span>
+                <span class="text-sm sm:text-base md:text-xl font-mono text-indigo-600 font-bold select-all cursor-copy bg-white/80 px-4 sm:px-6 py-2.5 rounded-xl border border-indigo-100 inline-block break-all max-w-full" title="Klik untuk menyorot email">
                     masdarhelmi23@gmail.com
                 </span>
-                <span class="text-[10px] text-slate-500 block mt-1.5">*(Klik teks email di atas untuk menyalin otomatis)*</span>
+                <span class="text-[10px] text-slate-600 block mt-1.5">*(Klik teks email di atas untuk menyalin otomatis)*</span>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center flex-wrap">
                 <a href="https://github.com/masdarhelmi23" target="_blank" class="bg-[#161b22] hover:bg-[#0d1117] text-white border border-slate-700/80 font-bold px-6 sm:px-7 py-3.5 sm:py-4 rounded-full transition shadow-xl flex items-center justify-center space-x-2 group w-full sm:w-auto">
-                    <span class="font-mono text-slate-400">&lt;/&gt;</span>
+                    <span class="font-mono text-slate-600">&lt;/&gt;</span>
                     <span>GitHub (masdarhelmi23)</span>
-                    <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition text-slate-500">↗</span>
+                    <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition text-slate-600">↗</span>
                 </a>
                 <a href="https://instagram.com/msdrhlmi_" target="_blank" class="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:opacity-90 text-white font-bold px-6 sm:px-7 py-3.5 sm:py-4 rounded-full transition shadow-xl flex items-center justify-center space-x-2 group w-full sm:w-auto">
                     <span>IG (@msdrhlmi_)</span>
@@ -485,45 +558,45 @@
     </section>
 
     <!-- FOOTER (Teks ini sekarang bisa diklik sebagai pintu masuk ke halaman Admin Rahasia) -->
-    <footer class="border-t border-white/5 pt-8 pb-24 md:pb-8 text-center text-xs text-slate-500 relative z-50">
-        <p onclick="openAdminModal()" class="cursor-pointer hover:text-indigo-400 transition inline-block px-4 py-2">
+    <footer class="border-t border-white/10 pt-8 pb-24 md:pb-8 text-center text-xs text-slate-400 relative z-50">
+        <p onclick="openAdminModal()" class="cursor-pointer hover:text-indigo-300 transition inline-block px-4 py-2">
             Diproduksi secara cermat dengan mengedepankan kualitas performa. © 2026 Masdar Helmi.
         </p>
     </footer>
 
     <!-- MODAL LOGIN ADMIN RAHASIA -->
-    <div id="admin-login-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+    <div id="admin-login-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-sm rounded-3xl p-8 relative">
-            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
-            <h3 class="text-xl font-bold text-white mb-6 text-center">Akses Terbatas</h3>
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-600 hover:text-indigo-600">✕</button>
+            <h3 class="text-xl font-bold text-slate-900 mb-6 text-center">Akses Terbatas</h3>
             <div class="space-y-4">
                 <div>
-                    <label class="text-xs text-slate-400 block mb-1">Username</label>
-                    <input type="text" id="admin-user" class="w-full bg-dark/50 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+                    <label class="text-xs text-slate-600 block mb-1">Username</label>
+                    <input type="text" id="admin-user" class="w-full bg-white/80 border border-slate-200 rounded-xl px-4 py-2 text-slate-900 focus:outline-none focus:border-indigo-500">
                 </div>
                 <div>
-                    <label class="text-xs text-slate-400 block mb-1">Password</label>
-                    <input type="password" id="admin-pass" class="w-full bg-dark/50 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+                    <label class="text-xs text-slate-600 block mb-1">Password</label>
+                    <input type="password" id="admin-pass" class="w-full bg-white/80 border border-slate-200 rounded-xl px-4 py-2 text-slate-900 focus:outline-none focus:border-indigo-500">
                 </div>
                 <button onclick="verifyAdmin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl transition mt-2">Login</button>
-                <p id="login-error" class="text-red-400 text-xs text-center hidden">Username atau Password salah!</p>
+                <p id="login-error" class="text-red-500 text-xs text-center hidden">Username atau Password salah!</p>
             </div>
         </div>
     </div>
 
     <!-- MODAL DASHBOARD ADMIN -->
-    <div id="admin-dashboard-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+    <div id="admin-dashboard-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md rounded-3xl p-8 relative">
-            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
-            <h3 class="text-2xl font-bold text-white mb-2">Dashboard Statistik</h3>
-            <p class="text-xs text-slate-400 mb-6">Data ini diambil dari Local Storage peramban.</p>
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-slate-600 hover:text-indigo-600">✕</button>
+            <h3 class="text-2xl font-bold text-slate-900 mb-2">Dashboard Statistik</h3>
+            <p class="text-xs text-slate-600 mb-6">Data ini diambil dari Local Storage peramban.</p>
             
-            <div class="bg-indigo-600/20 border border-indigo-500/30 rounded-2xl p-6 text-center mb-6">
-                <span class="block text-sm text-indigo-300 font-semibold mb-1">Kunjungan Hari Ini</span>
-                <span id="today-visits" class="text-5xl font-bold text-white">0</span>
+            <div class="bg-indigo-100 border border-indigo-500/30 rounded-2xl p-6 text-center mb-6">
+                <span class="block text-sm text-indigo-600 font-semibold mb-1">Kunjungan Hari Ini</span>
+                <span id="today-visits" class="text-5xl font-bold text-slate-900">0</span>
             </div>
 
-            <div class="bg-dark/50 border border-white/10 rounded-2xl p-4 max-h-40 overflow-y-auto" id="history-visits">
+            <div class="bg-white/80 border border-slate-200 rounded-2xl p-4 max-h-40 overflow-y-auto" id="history-visits">
                 <!-- Data riwayat harian akan dimunculkan di sini lewat JS -->
             </div>
         </div>
@@ -596,13 +669,13 @@
 
             // Tampilkan riwayat hari-hari sebelumnya
             const historyContainer = document.getElementById('history-visits');
-            historyContainer.innerHTML = '<span class="text-xs text-slate-500 font-bold mb-2 block uppercase">Riwayat Kunjungan Lokal</span>';
+            historyContainer.innerHTML = '<span class="text-xs text-slate-600 font-bold mb-2 block uppercase">Riwayat Kunjungan Lokal</span>';
             
             Object.keys(visitsData).reverse().forEach(date => {
                 historyContainer.innerHTML += `
-                    <div class="flex justify-between items-center py-2 border-b border-white/5 last:border-0 text-sm">
-                        <span class="text-slate-300">${date}</span>
-                        <span class="font-bold text-indigo-400">${visitsData[date]} views</span>
+                    <div class="flex justify-between items-center py-2 border-b border-indigo-100 last:border-0 text-sm">
+                        <span class="text-slate-700">${date}</span>
+                        <span class="font-bold text-indigo-600">${visitsData[date]} views</span>
                     </div>
                 `;
             });
@@ -610,167 +683,446 @@
 
 
         // ==========================================
-        // 3. FUNGSI FILTER KARYA & ANIMASI LAINNYA
+        // 3. FILTER KARYA (animasi saat memilih)
         // ==========================================
+        const PAL = {
+            all:    { c:['#6d5bff','#ff7ac8','#38d6ff'], accent:'#6366f1', btn:['#6366f1','#a855f7'] },
+            web:    { c:['#3b82f6','#6366f1','#22d3ee'], accent:'#3b82f6', btn:['#3b82f6','#6366f1'] },
+            desain: { c:['#c026d3','#f472b6','#8b5cf6'], accent:'#d946ef', btn:['#d946ef','#ec4899'] },
+            video:  { c:['#fb7185','#fb923c','#fbbf24'], accent:'#f43f5e', btn:['#f43f5e','#fb923c'] }
+        };
+        let filterAktif = 'all', modalOpen = false;
+        const POP = 'cubic-bezier(.34,1.56,.64,1)', OUT = 'cubic-bezier(.22,1,.36,1)';
+        const JUDUL = { all:'Semua Karya', web:'Web Development', desain:'Desain Grafis', video:'Video' };
+        const FIN = ['translate(-12px,7px) rotate(-3.4deg)', 'translate(9px,4px) rotate(2.6deg)', 'translate(-4px,2px) rotate(-1.1deg)', 'none'];
+
+        // Popup berbentuk tumpukan kertas
+        const pm = document.createElement('div'); pm.className = 'pm'; pm.id = 'paper-modal';
+        pm.innerHTML = `<div class="pm-backdrop"></div><div class="pm-stage">
+            <div class="pm-sheet"></div><div class="pm-sheet"></div><div class="pm-sheet"></div>
+            <div class="pm-sheet pm-main" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+                <div class="pm-fold"></div>
+                <header class="pm-head"><div><h3 class="pm-title" id="pm-title"></h3><span class="pm-count"></span></div>
+                <button class="pm-close" aria-label="Tutup">✕</button></header>
+                <div class="pm-body"></div></div></div>`;
+        document.body.appendChild(pm);
+        const pmStage = pm.querySelector('.pm-stage'), pmBody = pm.querySelector('.pm-body'), sheets = [...pm.querySelectorAll('.pm-sheet')];
+        pmBody.appendChild(document.getElementById('karya-container'));
+
         function filterKarya(kategori) {
-            const btns = document.querySelectorAll('.filter-btn');
-            btns.forEach(b => {
-                b.className = "filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition glass-panel text-slate-400 hover:text-white";
+            if (modalOpen) return;
+            filterAktif = kategori; modalOpen = true;
+            const btn = document.querySelector(`[data-btn="${kategori}"]`);
+            document.querySelectorAll('.fbox').forEach(b => b.classList.toggle('is-open', b === btn));
+            const cards = [...document.querySelectorAll('.karya-card')]; let n = 0;
+            cards.forEach(c => {
+                c.dataset.rv = 1; c.getAnimations().forEach(x => x.cancel());
+                const ok = kategori === 'all' || c.dataset.kategori === kategori; c.style.display = ok ? 'block' : 'none'; if (ok) n++;
             });
-            const aktif = document.querySelector(`[data-btn="${kategori}"]`);
-            if(aktif) aktif.className = "filter-btn px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition bg-indigo-600 text-white border border-indigo-500 shadow-lg shadow-indigo-500/20";
+            pm.querySelector('.pm-title').textContent = JUDUL[kategori]; pm.querySelector('.pm-count').textContent = n + ' karya';
+            pm.style.setProperty('--ac', (PAL[kategori] || PAL.all).accent);
+            pmBody.scrollTop = 0; pm.classList.add('open'); document.body.style.overflow = 'hidden';
+            if (window.__fx) window.__fx.select(kategori);
 
-            const cards = document.querySelectorAll('.karya-card');
-            cards.forEach(card => {
-                const katCard = card.getAttribute('data-kategori');
-                if(kategori === 'all' || katCard === kategori) {
-                    card.style.display = 'block';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                    }, 10);
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.8)';
-                    setTimeout(() => { card.style.display = 'none'; }, 300);
+            const rb = btn.getBoundingClientRect(), bx = rb.left + rb.width / 2, by = rb.top + rb.height / 2;
+            if (window.__fx2) window.__fx2.launch(bx, by);
+            const rs = pmStage.getBoundingClientRect(), dx = bx - (rs.left + rs.width / 2), dy = by - (rs.top + rs.height / 2);
+            pm.querySelector('.pm-backdrop').animate([{ opacity:0 }, { opacity:1 }], { duration:300, easing:'ease-out' });
+            sheets.forEach((s, i) => {
+                s.style.transform = FIN[i];
+                s.animate([
+                    { transform:`translate(${dx}px,${dy}px) rotate(${(i % 2 ? 1 : -1) * (28 + i * 9)}deg) scale(.06)`, opacity:0 },
+                    { opacity:1, offset:.2 }, { transform:FIN[i], opacity:1 }],
+                    { duration:760, delay:i * 110, easing:'cubic-bezier(.2,.85,.25,1.06)', fill:'backwards' });
+            });
+            cards.filter(c => c.style.display !== 'none').forEach((c, i) => c.animate(
+                [{ opacity:0, transform:'translateY(36px) rotate(-1.5deg) scale(.96)' }, { opacity:1, transform:'none' }],
+                { duration:600, delay:800 + Math.min(i, 12) * 55, easing:POP, fill:'backwards' }));
+            setTimeout(() => pm.querySelector('.pm-close').focus({ preventScroll:true }), 450);
+        }
+
+        function closePaper() {
+            if (!modalOpen) return; modalOpen = false;
+            const btn = document.querySelector('.fbox.is-open'); let dx = 0, dy = 0;
+            if (btn) { const rb = btn.getBoundingClientRect(), rs = pmStage.getBoundingClientRect(); dx = rb.left + rb.width / 2 - (rs.left + rs.width / 2); dy = rb.top + rb.height / 2 - (rs.top + rs.height / 2); }
+            let last;
+            [3, 2, 1, 0].forEach((idx, k) => { last = sheets[idx].animate(
+                [{ transform:FIN[idx], opacity:1 }, { transform:`translate(${dx}px,${dy}px) rotate(${(idx % 2 ? 1 : -1) * 20}deg) scale(.06)`, opacity:0 }],
+                { duration:420, delay:k * 70, easing:'cubic-bezier(.5,0,.75,0)', fill:'forwards' }); });
+            pm.querySelector('.pm-backdrop').animate([{ opacity:1 }, { opacity:0 }], { duration:420, delay:200, fill:'forwards' });
+            last.onfinish = () => {
+                pm.classList.remove('open'); pm.getAnimations({ subtree:true }).forEach(x => x.cancel());
+                document.body.style.overflow = '';
+                document.querySelectorAll('.fbox').forEach(b => b.classList.remove('is-open'));
+                if (btn) btn.focus({ preventScroll:true });
+            };
+        }
+        pm.querySelector('.pm-close').addEventListener('click', closePaper);
+        pm.querySelector('.pm-backdrop').addEventListener('click', closePaper);
+        pmStage.addEventListener('click', e => { if (e.target === pmStage) closePaper(); });
+        addEventListener('keydown', e => { if (e.key === 'Escape') closePaper(); });
+
+        // ==========================================
+        // 4. THREE.JS: blob gradient + bentuk melayang (tema terang)
+        // ==========================================
+        (function () {
+            window.__fx = { select(){}, section(){}, nav(){} };
+            const canvas = document.getElementById('bg-canvas');
+            let renderer;
+            try { renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true }); } catch (e) { return; }
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+            renderer.setSize(innerWidth, innerHeight);
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, .1, 100);
+            const CZ = 14, RANGE = 24;
+            camera.position.set(0, 0, CZ);
+            scene.add(new THREE.HemisphereLight(0xbfd4ff, 0x1e1b4b, .9));
+            const dl = new THREE.DirectionalLight(0xffffff, .8); dl.position.set(5, 8, 7); scene.add(dl);
+            const pl = new THREE.PointLight(0xf0abfc, .7, 40); pl.position.set(-8, -2, 6); scene.add(pl);
+
+            // --- Blob gradient yang berombak ---
+            const VS = `uniform float uTime, uAmp; varying vec3 vN, vV, vP;
+            float f(vec3 p){ return sin(p.x*1.7+uTime)*sin(p.y*1.9+uTime*.8)*sin(p.z*1.6+uTime*.6)+.5*sin(p.x*3.1-uTime*1.2)*sin(p.y*2.7+uTime); }
+            vec3 dp(vec3 p){ return p + normalize(p)*f(p*.9)*uAmp; }
+            void main(){
+              vec3 t = normalize(cross(normal, vec3(0.,1.,.01))), b = cross(normal, t);
+              vec3 p0 = dp(position), pt = dp(position+t*.05), pb = dp(position+b*.05);
+              vec3 n = normalize(cross(pt-p0, pb-p0)); if(dot(n, normal) < 0.) n = -n;
+              vec4 mv = modelViewMatrix*vec4(p0,1.);
+              vN = normalize(normalMatrix*n); vV = normalize(-mv.xyz); vP = p0;
+              gl_Position = projectionMatrix*mv; }`;
+            const FS = `uniform vec3 uC1, uC2, uC3; uniform float uTime, uOp; varying vec3 vN, vV, vP;
+            void main(){
+              float g = vN.y*.5+.5 + sin(vP.x*.8+uTime*.5)*.18;
+              vec3 col = mix(uC1, uC2, smoothstep(0.,.6,g)); col = mix(col, uC3, smoothstep(.5,1.,g));
+              float diff = dot(vN, normalize(vec3(.5,.8,.6)))*.5+.5;
+              col *= .8+.3*diff;
+              col += pow(1.-max(dot(vN,vV),0.), 2.5)*.55;
+              gl_FragColor = vec4(col, uOp); }`;
+            const U = { uTime:{value:0}, uAmp:{value:.3}, uOp:{value:.92},
+                uC1:{value:new THREE.Color(PAL.all.c[0])}, uC2:{value:new THREE.Color(PAL.all.c[1])}, uC3:{value:new THREE.Color(PAL.all.c[2])} };
+            const blob = new THREE.Mesh(new THREE.IcosahedronGeometry(2.3, 18), new THREE.ShaderMaterial({ uniforms:U, vertexShader:VS, fragmentShader:FS, transparent:true }));
+            const rig = new THREE.Group(); rig.add(blob);
+            const ringMats = [0, 1].map(() => new THREE.MeshBasicMaterial({ color:0x6366f1, transparent:true, opacity:.6 }));
+            const rings = ringMats.map((m, i) => { const r = new THREE.Mesh(new THREE.TorusGeometry(3.3 + i * .6, .035, 8, 160), m); r.rotation.set(1.2 + i, .4, i); rig.add(r); return r; });
+            rig.position.z = -2; scene.add(rig);
+
+            // --- Bentuk pastel melayang ---
+            const defs = [[new THREE.IcosahedronGeometry(.8,1),0x8b8fa8,1],[new THREE.DodecahedronGeometry(.7),0xa8a29e,1],[new THREE.SphereGeometry(.55,32,32),0xd9643a],
+                [new THREE.IcosahedronGeometry(.6,0),0x6b7280,1],[new THREE.SphereGeometry(.45,32,32),0x7dd3fc],[new THREE.OctahedronGeometry(.65),0x9ca3af,1],
+                [new THREE.SphereGeometry(.7,32,32),0xc4b5fd],[new THREE.DodecahedronGeometry(.5),0x78716c,1],[new THREE.SphereGeometry(.38,32,32),0xfbbf24],[new THREE.IcosahedronGeometry(.75,1),0x94a3b8,1]];
+            const shapes = defs.map((d, i) => {
+                const m = new THREE.Mesh(d[0], new THREE.MeshStandardMaterial({ color:d[1], roughness:d[2] ? .9 : .45, metalness:.05, flatShading:!!d[2], transparent:true }));
+                m.userData = { phase:Math.random()*6.28, r1:Math.random(), r2:Math.random(), spin:new THREE.Vector3(Math.random()-.5, Math.random()-.5, Math.random()-.5), pop:0 };
+                scene.add(m); return m; });
+            let halfW = 11, mob = false;
+            function layout() {
+                camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+                renderer.setSize(innerWidth, innerHeight);
+                halfW = Math.tan(25 * Math.PI / 180) * CZ * camera.aspect; mob = innerWidth < 768;
+                shapes.forEach((m, i) => {
+                    const u = m.userData, side = i % 2 ? 1 : -1;
+                    u.base = new THREE.Vector3(side * halfW * ((mob ? .55 : .5) + u.r1 * .4), 3 - (i / (shapes.length - 1)) * (RANGE + 6), -3 + (i % 3) * 1.8);
+                    u.s = (mob ? .55 : 1) * (.8 + u.r2 * .5); m.material.opacity = mob ? .6 : 1;
+                });
+            }
+            addEventListener('resize', layout); layout();
+
+            // --- Partikel lembut + percikan saat memilih ---
+            const sprite = (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+                const gr = g.createRadialGradient(32,32,0,32,32,32); gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(.4,'rgba(255,255,255,.6)'); gr.addColorStop(1,'rgba(255,255,255,0)');
+                g.fillStyle = gr; g.fillRect(0,0,64,64); return new THREE.CanvasTexture(c); })();
+            const N = 1100, pp = new Float32Array(N * 3);
+            for (let i = 0; i < N; i++) { pp[i*3] = (Math.random()-.5)*44; pp[i*3+1] = 8 - Math.random()*(RANGE+16); pp[i*3+2] = -6 + Math.random()*10; }
+            const pGeo = new THREE.BufferGeometry(); pGeo.setAttribute('position', new THREE.BufferAttribute(pp, 3));
+            const pc = new Float32Array(N * 3), tint = [[1,1,1],[.7,.82,1],[1,.8,.9],[1,.95,.7]];
+            for (let i = 0; i < N; i++) { const c = tint[Math.floor(Math.random() * 4)]; pc.set(c, i * 3); }
+            pGeo.setAttribute('color', new THREE.BufferAttribute(pc, 3));
+            const pMat = new THREE.PointsMaterial({ size:.17, map:sprite, vertexColors:true, transparent:true, opacity:.9, depthWrite:false });
+            scene.add(new THREE.Points(pGeo, pMat));
+            const SN = 90, sp = new Float32Array(SN * 3), sv = new Float32Array(SN * 3);
+            const sGeo = new THREE.BufferGeometry(); sGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+            const sMat = new THREE.PointsMaterial({ size:.45, map:sprite, color:0x6366f1, transparent:true, opacity:0, depthWrite:false });
+            const sparks = new THREE.Points(sGeo, sMat); sparks.frustumCulled = false; scene.add(sparks);
+            let life = 0;
+
+            const pulse = { v:0, s:0 };
+            let cur = 'all';
+            function setPalette(key) {
+                if (key === cur || !PAL[key]) return; cur = key; const p = PAL[key];
+                [U.uC1.value, U.uC2.value, U.uC3.value].forEach((c, i) => { const t = new THREE.Color(p.c[i]); gsap.to(c, { r:t.r, g:t.g, b:t.b, duration:1.1, ease:'power2.out' }); });
+                const a = new THREE.Color(p.accent);
+                [...ringMats, sMat].forEach(m => gsap.to(m.color, { r:a.r, g:a.g, b:a.b, duration:1.1 }));
+                
+            }
+            function ripple(pos, power) {
+                const mat = new THREE.MeshBasicMaterial({ color:ringMats[0].color.clone(), transparent:true, opacity:.8, side:THREE.DoubleSide });
+                const r = new THREE.Mesh(new THREE.RingGeometry(.94, 1, 64), mat); r.position.copy(pos); scene.add(r);
+                gsap.to(r.scale, { x:9*power, y:9*power, duration:1.3, ease:'power2.out' });
+                gsap.to(mat, { opacity:0, duration:1.3, ease:'power2.out', onComplete(){ scene.remove(r); r.geometry.dispose(); mat.dispose(); } });
+            }
+            function burst(power) {
+                ripple(rig.position, power);
+                gsap.fromTo(pulse, { v:.7*power, s:.25*power }, { v:0, s:0, duration:1.5, ease:'elastic.out(1,.4)' });
+                for (let i = 0; i < SN; i++) {
+                    const a = Math.random()*6.28, b = Math.acos(2*Math.random()-1), s = (2 + Math.random()*5) * power;
+                    sp[i*3] = rig.position.x; sp[i*3+1] = rig.position.y; sp[i*3+2] = rig.position.z;
+                    sv[i*3] = Math.sin(b)*Math.cos(a)*s; sv[i*3+1] = Math.sin(b)*Math.sin(a)*s; sv[i*3+2] = Math.cos(b)*s;
                 }
+                life = 1;
+                shapes.forEach((m, i) => gsap.fromTo(m.userData, { pop:1 }, { pop:0, duration:1.3, ease:'elastic.out(1,.5)', delay:i * .04 }));
+            }
+            const secPal = { hero:'all', keahlian:'web', kontak:'video' };
+            window.__fx = {
+                select(k) { setPalette(k); burst(1); },
+                nav() { ripple(rig.position, .6); },
+                section(id) { setPalette(id === 'projek' ? filterAktif : secPal[id]); gsap.fromTo(pulse, { v:.3 }, { v:0, duration:1, ease:'power2.out' }); }
+            };
+
+            // Klik bentuk melayang -> berputar
+            const ray = new THREE.Raycaster();
+            addEventListener('pointerdown', e => {
+                if (e.target.closest('a,button,input,.glass-panel')) return;
+                ray.setFromCamera({ x:e.clientX/innerWidth*2-1, y:-(e.clientY/innerHeight)*2+1 }, camera);
+                const hit = ray.intersectObjects(shapes)[0]; if (!hit) return;
+                const m = hit.object;
+                gsap.to(m.rotation, { x:'+=6.28', y:'+=6.28', duration:1.2, ease:'power3.out' });
+                gsap.fromTo(m.userData, { pop:1.4 }, { pop:0, duration:1.2, ease:'elastic.out(1,.5)' });
+                ripple(m.position, .35);
             });
-        }
 
-        const canvas = document.getElementById('bg-canvas');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            const gc = document.createElement('canvas'); gc.width = 128; gc.height = 4; const gx = gc.getContext('2d');
+            const gg = gx.createLinearGradient(0,0,128,0); gg.addColorStop(0,'rgba(255,255,255,0)'); gg.addColorStop(1,'rgba(255,255,255,1)'); gx.fillStyle = gg; gx.fillRect(0,0,128,4);
+            const shoot = new THREE.Mesh(new THREE.PlaneGeometry(3, .08), new THREE.MeshBasicMaterial({ map:new THREE.CanvasTexture(gc), transparent:true, depthWrite:false, opacity:0 }));
+            shoot.rotation.z = -.46; scene.add(shoot); let sT = 2.5, sLife = 0;
+            let mx = 0, my = 0, sy = 0, prog = 0, vel = 0, lastY = 0;
+            addEventListener('mousemove', e => { mx = e.clientX/innerWidth - .5; my = e.clientY/innerHeight - .5; });
+            const calm = matchMedia('(prefers-reduced-motion: reduce)').matches ? .2 : 1;
+            const clock = new THREE.Clock();
+            (function frame() {
+                requestAnimationFrame(frame);
+                const dt = Math.min(clock.getDelta(), .05) * calm, t = clock.elapsedTime;
+                const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+                prog += (Math.min(1, scrollY / max) - prog) * .06;
+                vel += ((scrollY - lastY) - vel) * .1; lastY = scrollY;
+                camera.position.y = -prog * RANGE;
+                camera.position.x += (mx * 1.2 - camera.position.x) * .04;
+                camera.lookAt(camera.position.x * .3, camera.position.y, 0);
 
-        const geometry = new THREE.IcosahedronGeometry(3.5, 1);
-        const material = new THREE.MeshStandardMaterial({ color: 0x6366f1, wireframe: true, transparent: true, opacity: 0.15 });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
+                U.uTime.value = t * calm;
+                U.uAmp.value = .3 + Math.min(Math.abs(vel) * .012, .35) + pulse.v;
+                U.uOp.value = mob ? .6 : .95;
+                const tx = mob ? 0 : halfW * .62 * Math.cos(prog * Math.PI * 3);
+                rig.position.x += (tx - rig.position.x) * .05;
+                rig.position.y += ((camera.position.y + Math.sin(prog * 9) * .6) - rig.position.y) * .08;
+                rig.scale.setScalar((mob ? .62 : 1.1) * (1 + pulse.s));
+                blob.rotation.y += dt * .25; blob.rotation.x += (my * .8 - blob.rotation.x) * .05;
+                rings[0].rotation.z += dt * .3; rings[1].rotation.y -= dt * .22;
 
-        const particlesGeo = new THREE.BufferGeometry();
-        const particlesCount = 700;
-        const posArray = new Float32Array(particlesCount * 3);
-        for(let i=0; i<particlesCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 20; }
-        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMat = new THREE.PointsMaterial({ size: 0.015, color: 0x818cf8, transparent: true, opacity: 0.5 });
-        const particles = new THREE.Points(particlesGeo, particlesMat);
-        scene.add(particles);
+                shapes.forEach(m => { const u = m.userData;
+                    m.position.set(u.base.x, u.base.y + Math.sin(t * .6 * calm + u.phase) * .35, u.base.z);
+                    m.rotation.x += u.spin.x * dt * (1 + u.pop * 4); m.rotation.y += u.spin.y * dt * (1 + u.pop * 4); m.rotation.z += u.spin.z * dt;
+                    m.scale.setScalar(u.s * (1 + u.pop * .35)); });
+                for (let i = 0; i < N; i++) { pp[i*3+1] += dt * .03; pp[i*3] += Math.sin(t + i) * .0015; if (pp[i*3+1] > 9) pp[i*3+1] = 8 - RANGE - 16; }
+                pGeo.attributes.position.needsUpdate = true;
+                if (life > 0) {
+                    life -= dt * .8;
+                    for (let i = 0; i < SN * 3; i++) { sp[i] += sv[i] * dt; sv[i] *= .96; }
+                    sGeo.attributes.position.needsUpdate = true; sMat.opacity = Math.max(life, 0);
+                }
+                pMat.opacity = .72 + Math.sin(t * 1.7) * .2;
+                sT -= dt;
+                if (sT <= 0 && sLife <= 0) { sLife = 1; sT = 4 + Math.random() * 5; shoot.position.set(camera.position.x - halfW * (.1 + Math.random() * .8), camera.position.y + 1 + Math.random() * 5, -1); }
+                if (sLife > 0) { sLife -= dt * .9; shoot.position.x += dt * 16; shoot.position.y -= dt * 8; shoot.material.opacity = Math.sin(Math.max(sLife, 0) * Math.PI) * .9; }
+                renderer.render(scene, camera);
+            })();
+        })();
 
-        // Objek 3D tambahan: torus knot, cincin, dan kristal melayang
-        const knot = new THREE.Mesh(
-            new THREE.TorusKnotGeometry(1.1, 0.32, 160, 20),
-            new THREE.MeshStandardMaterial({ color: 0xa855f7, wireframe: true, transparent: true, opacity: 0.22 })
-        );
-        knot.position.set(-5.5, -1.5, -2);
-        scene.add(knot);
+        // ==========================================
+        // 4b. EFEK FOLDER + ROKET (canvas depan, three.js)
+        // ==========================================
+        (function () {
+            window.__fx2 = { folder(){}, mini(){}, launch(){} };
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const cv = document.createElement('canvas');
+            cv.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70';
+            document.body.appendChild(cv);
+            let r; try { r = new THREE.WebGLRenderer({ canvas:cv, alpha:true, antialias:true }); } catch (e) { return; }
+            const PR = Math.min(devicePixelRatio || 1, 2); r.setPixelRatio(PR);
+            const sc = new THREE.Scene(); let W = innerWidth, H = innerHeight;
+            const cam = new THREE.OrthographicCamera(0, W, H, 0, -1000, 1000); cam.position.z = 10;
+            const size = () => { W = innerWidth; H = innerHeight; r.setSize(W, H); cam.right = W; cam.top = H; cam.updateProjectionMatrix(); };
+            size(); addEventListener('resize', size);
+            sc.add(new THREE.AmbientLight(0xffffff, .85));
+            const dl = new THREE.DirectionalLight(0xffffff, .9); dl.position.set(-.5, .8, 1); sc.add(dl);
 
-        const ring = new THREE.Mesh(
-            new THREE.TorusGeometry(1.6, 0.04, 16, 100),
-            new THREE.MeshBasicMaterial({ color: 0xec4899, transparent: true, opacity: 0.45 })
-        );
-        ring.position.set(5.5, 1.5, -2);
-        scene.add(ring);
+            // --- partikel asap & api ---
+            const TN = 300, tp = new Float32Array(TN*3), tc = new Float32Array(TN*3), ts = new Float32Array(TN), ta = new Float32Array(TN);
+            const tL = new Float32Array(TN), tM = new Float32Array(TN), tvx = new Float32Array(TN), tvy = new Float32Array(TN), t0 = new Float32Array(TN);
+            const cA = [], cB = []; let ptr = 0;
+            const tg = new THREE.BufferGeometry();
+            tg.setAttribute('position', new THREE.BufferAttribute(tp, 3)); tg.setAttribute('aColor', new THREE.BufferAttribute(tc, 3));
+            tg.setAttribute('aSize', new THREE.BufferAttribute(ts, 1)); tg.setAttribute('aAlpha', new THREE.BufferAttribute(ta, 1));
+            const pts = new THREE.Points(tg, new THREE.ShaderMaterial({ transparent:true, depthWrite:false, uniforms:{ uPR:{ value:PR } },
+                vertexShader:'attribute vec3 aColor; attribute float aSize, aAlpha; varying vec3 vC; varying float vA; uniform float uPR; void main(){ vC=aColor; vA=aAlpha; gl_PointSize=aSize*uPR; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }',
+                fragmentShader:'varying vec3 vC; varying float vA; void main(){ float d=length(gl_PointCoord-.5)*2.; gl_FragColor=vec4(vC, smoothstep(1.,.2,d)*vA); }' }));
+            pts.frustumCulled = false; pts.position.z = 4; sc.add(pts);
+            const FIRE1=[1,.9,.35], FIRE2=[.98,.4,.2], SM1=[.62,.64,.75], SM2=[.88,.9,.95];
+            function emit(x, y, vx, vy, size, life, c1, c2) {
+                const i = ptr++ % TN; tp[i*3] = x; tp[i*3+1] = y; tvx[i] = vx; tvy[i] = vy; t0[i] = size; tL[i] = tM[i] = life; cA[i] = c1; cB[i] = c2;
+            }
+            function updateTrail(dt) {
+                let alive = 0;
+                for (let i = 0; i < TN; i++) {
+                    if (tL[i] > 0) {
+                        tL[i] -= dt; alive++; const t = 1 - Math.max(tL[i], 0) / tM[i];
+                        tp[i*3] += tvx[i]*dt; tp[i*3+1] += tvy[i]*dt; tvx[i] *= .97; tvy[i] *= .97;
+                        for (let k = 0; k < 3; k++) tc[i*3+k] = cA[i][k] + (cB[i][k] - cA[i][k]) * t;
+                        ta[i] = (1 - t) * .9; ts[i] = t0[i] * (1 + t * .9);
+                    } else ta[i] = 0;
+                }
+                ['position','aColor','aSize','aAlpha'].forEach(n => tg.attributes[n].needsUpdate = true);
+                return alive;
+            }
 
-        const crystals = [];
-        for (let i = 0; i < 8; i++) {
-            const c = new THREE.Mesh(
-                new THREE.OctahedronGeometry(0.25 + Math.random() * 0.3),
-                new THREE.MeshStandardMaterial({ color: 0x818cf8, wireframe: true, transparent: true, opacity: 0.35 })
-            );
-            c.position.set((Math.random() - 0.5) * 14, (Math.random() - 0.5) * 9, (Math.random() - 0.5) * 4 - 1);
-            c.userData.speed = 0.004 + Math.random() * 0.01;
-            c.userData.phase = Math.random() * Math.PI * 2;
-            crystals.push(c);
-            scene.add(c);
-        }
+            // --- roket ---
+            function makeRocket() {
+                const g = new THREE.Group(), inner = new THREE.Group(); g.add(inner);
+                const std = (c, rg = .4, mt = .1) => new THREE.MeshStandardMaterial({ color:c, roughness:rg, metalness:mt });
+                const add = (m, y) => { m.position.y = y; inner.add(m); return m; };
+                add(new THREE.Mesh(new THREE.CylinderGeometry(.35, .35, 1.3, 24), std(0xffffff, .3, .2)), 0);
+                add(new THREE.Mesh(new THREE.ConeGeometry(.35, .7, 24), std(0xf43f5e)), 1);
+                add(new THREE.Mesh(new THREE.CylinderGeometry(.22, .3, .15, 16), std(0x475569)), -.72);
+                const win = new THREE.Mesh(new THREE.SphereGeometry(.17, 16, 16), std(0x38bdf8, .1, .3)); win.position.set(0, .3, .3); inner.add(win);
+                for (let i = 0; i < 3; i++) {
+                    const fp = new THREE.Group(); fp.rotation.y = i * 2.094;
+                    const fin = new THREE.Mesh(new THREE.BoxGeometry(.4, .5, .08), std(0xf43f5e)); fin.position.set(.42, -.5, 0); fp.add(fin); inner.add(fp);
+                }
+                const flame = new THREE.Mesh(new THREE.ConeGeometry(.2, .9, 16), new THREE.MeshBasicMaterial({ color:0xfb923c }));
+                flame.rotation.x = Math.PI; flame.position.y = -1.2; g.add(flame);
+                g.userData = { inner, flame }; return g;
+            }
+            let busy = 0;
+            function rocket(x, y, tx, ty, k, delay) {
+                const R = makeRocket(), S = 34 * k, p = { t:0 };
+                R.scale.setScalar(S); R.visible = false; sc.add(R); busy++;
+                const p1 = [x + (tx - x) * .15, y + (ty - y) * .7];
+                gsap.to(p, { t:1, duration:1.7, delay, ease:'power2.in',
+                    onStart() { R.visible = true; },
+                    onUpdate() {
+                        const t = p.t, u = 1 - t;
+                        const px = u*u*x + 2*u*t*p1[0] + t*t*tx, py = u*u*y + 2*u*t*p1[1] + t*t*ty;
+                        const dx = 2*u*(p1[0]-x) + 2*t*(tx-p1[0]), dy = 2*u*(p1[1]-y) + 2*t*(ty-p1[1]);
+                        const a = Math.atan2(dy, dx), ux = Math.cos(a), uy = Math.sin(a);
+                        R.position.set(px, py, 5); R.rotation.z = a - Math.PI / 2;
+                        R.userData.inner.rotation.y += .25; R.userData.flame.scale.set(1, .8 + Math.random() * .6, 1);
+                        const bx = px - ux * S * 1.3, by = py - uy * S * 1.3;
+                        for (let i = 0; i < 3; i++) {
+                            const fire = i < 2;
+                            emit(bx + (Math.random()-.5)*6, by + (Math.random()-.5)*6, -ux*70 + (Math.random()-.5)*60, -uy*70 + (Math.random()-.5)*60,
+                                (fire ? 16 : 24) * k, fire ? .45 : .9, fire ? FIRE1 : SM1, fire ? FIRE2 : SM2);
+                        }
+                    },
+                    onComplete() { sc.remove(R); busy--; } });
+            }
 
-        const pointLight = new THREE.PointLight(0xffffff, 1.5);
-        pointLight.position.set(2, 3, 4);
-        scene.add(pointLight);
-        scene.add(new THREE.AmbientLight(0x6366f1, 0.6));
-        camera.position.z = 7;
+            // --- folder + lembar dokumen ---
+            function makeFolder(color) {
+                const g = new THREE.Group(), mk = c => new THREE.MeshStandardMaterial({ color:c, roughness:.5 });
+                const dark = new THREE.Color(color).multiplyScalar(.78);
+                const back = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.1, .06), mk(dark));
+                const tab = new THREE.Mesh(new THREE.BoxGeometry(.6, .18, .06), mk(dark)); tab.position.set(-.5, .63, 0);
+                const pivot = new THREE.Group(); pivot.position.set(0, -.55, .06);
+                const lid = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1, .05), mk(color)); lid.position.y = .5; pivot.add(lid);
+                g.add(back, tab, pivot); g.userData.lid = pivot; return g;
+            }
+            function sheet(x, y0, to, i, accent) {
+                const g = new THREE.Group(), mats = [];
+                const mk = (c, w, h, z) => { const m = new THREE.MeshBasicMaterial({ color:c, transparent:true, side:THREE.DoubleSide }); mats.push(m);
+                    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), m); p.position.z = z; g.add(p); return p; };
+                mk(accent, 1.1, 1.38, -.01); mk(0xffffff, 1, 1.25, 0);
+                [.3, 0, -.3].forEach(o => mk(accent, .7, .09, .01).position.y = o);
+                g.visible = false; g.position.set(x, y0, 2); sc.add(g);
+                const sx = x + (i - 2) * 14, tx = to.x + (i - 2) * 70, ty = H - to.y, p = { t:0 };
+                gsap.to(p, { t:1, duration:1, delay:i * .09, ease:'power2.inOut',
+                    onStart() { g.visible = true; },
+                    onUpdate() {
+                        g.position.x = sx + (tx - sx) * p.t; g.position.y = y0 + (ty - y0) * p.t + Math.sin(p.t * Math.PI) * 140;
+                        g.rotation.z = (i - 2) * .5 * p.t; g.rotation.y = p.t * Math.PI * 2; g.scale.setScalar(38 * (.4 + .6 * Math.min(1, p.t * 3)));
+                        const o = p.t > .7 ? 1 - (p.t - .7) / .3 : 1; mats.forEach(m => m.opacity = o);
+                    },
+                    onComplete() { sc.remove(g); } });
+            }
+            window.__fx2 = {
+                folder(rect, to, accent) {
+                    const x = rect.left + rect.width / 2, y = H - Math.max(110, rect.top - 70), S = 72;
+                    const f = makeFolder(accent); f.scale.setScalar(.001); f.position.set(x, y, 0); f.rotation.set(-.45, .3, 0); sc.add(f); busy++;
+                    const lid = f.userData.lid;
+                    gsap.timeline()
+                        .to(f.scale, { x:S, y:S, z:S, duration:.45, ease:'back.out(2.2)' })
+                        .to(lid.rotation, { x:1.75, duration:.4, ease:'power2.out' }, '-=.1')
+                        .add(() => { for (let i = 0; i < 5; i++) sheet(x, y + S * .4, to, i, accent); }, '+=.05')
+                        .to(lid.rotation, { x:0, duration:.35, ease:'power2.in' }, '+=.55')
+                        .add(() => rocket(x, y + S * .5, W + 110, H + 110, 1, 0))
+                        .to(f.scale, { x:.001, y:.001, z:.001, duration:.35, ease:'power2.in' }, '+=.05')
+                        .add(() => { sc.remove(f); busy--; });
+                },
+                launch(cx, cy) { rocket(cx, H - cy, W + 110, H + 110, 1, 0); },
+                mini(cx, cy) { rocket(cx, H - cy, cx + W * .18, cy < H / 2 ? -120 : H + 120, .6, 0); }
+            };
+            const clk = new THREE.Clock(); let was = false;
+            (function loop() {
+                requestAnimationFrame(loop);
+                const alive = updateTrail(Math.min(clk.getDelta(), .05));
+                if (busy > 0 || alive > 0) { r.render(sc, cam); was = true; } else if (was) { r.render(sc, cam); was = false; }
+            })();
+            setTimeout(() => { rocket(-80, H * .25, W + 120, H * .95, .8, 0); rocket(-80, H * .1, W + 120, H * .7, .55, .35); }, 1400);
+        })();
 
-        let scrollY = 0;
-        window.addEventListener('scroll', () => { scrollY = window.scrollY; });
-
-        let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-        window.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) - 0.5;
-            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        // ==========================================
+        // 5. TILT KARTU, SCROLL, NAVIGASI AKTIF
+        // ==========================================
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+                const rx = ((y - r.height / 2) / (r.height / 2)) * -8, ry = ((x - r.width / 2) / (r.width / 2)) * 8;
+                card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px) scale3d(1.02,1.02,1.02)`;
+                card.style.setProperty('--mx', (x / r.width * 100) + '%'); card.style.setProperty('--my', (y / r.height * 100) + '%');
+            });
+            card.addEventListener('mouseleave', () => { card.style.transform = ''; });
         });
 
-        function animate() {
-            requestAnimationFrame(animate);
-            sphere.rotation.x += 0.001; sphere.rotation.y += 0.002;
-            particles.rotation.y += 0.0005;
-            targetX = mouseX * 1.2; targetY = mouseY * 1.2;
-            sphere.rotation.y += (targetX - sphere.rotation.y) * 0.05;
-            sphere.rotation.x += (targetY - sphere.rotation.x) * 0.05;
-            const t = performance.now() * 0.001;
-            knot.rotation.x += 0.006; knot.rotation.y += 0.008;
-            ring.rotation.x += 0.01; ring.rotation.y += 0.006;
-            crystals.forEach(c => {
-                c.rotation.x += c.userData.speed; c.rotation.y += c.userData.speed * 1.4;
-                c.position.y += Math.sin(t + c.userData.phase) * 0.003;
-            });
-            // Parallax kamera mengikuti scroll dan mouse
-            camera.position.y += ((-scrollY * 0.0016 - mouseY * 0.6) - camera.position.y) * 0.05;
-            camera.position.x += ((mouseX * 0.8) - camera.position.x) * 0.05;
-            camera.lookAt(0, 0, 0);
-            renderer.render(scene, camera);
-        }
-        animate();
+        const bar = document.getElementById('progress');
+        addEventListener('scroll', () => {
+            const m = document.documentElement.scrollHeight - innerHeight;
+            bar.style.transform = `scaleX(${m > 0 ? scrollY / m : 0})`;
+        }, { passive:true });
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        const navLinks = [...document.querySelectorAll('nav a[href^="#"]')];
+        navLinks.forEach(a => a.addEventListener('click', e => { window.__fx.nav(); const q = e.currentTarget.getBoundingClientRect(); window.__fx2.mini(q.left + q.width / 2, q.top + q.height / 2); }));
+        const spy = new IntersectionObserver(es => es.forEach(en => {
+            if (!en.isIntersecting) return;
+            navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id));
+            window.__fx.section(en.target.id);
+        }), { rootMargin:'-45% 0px -50% 0px' });
+        ['hero', 'keahlian', 'projek', 'kontak'].forEach(id => spy.observe(document.getElementById(id)));
 
-        const cards = document.querySelectorAll('.tilt-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left, y = e.clientY - rect.top;
-                const centerX = rect.width / 2, centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -10;
-                const rotateY = ((x - centerX) / centerX) * 10;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-            });
-        });
-
-        // Tilt 3D untuk kartu video + efek kilau
-        document.querySelectorAll('.tilt-video').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const r = card.getBoundingClientRect();
-                const x = e.clientX - r.left, y = e.clientY - r.top;
-                const rx = ((y - r.height / 2) / (r.height / 2)) * -9;
-                const ry = ((x - r.width / 2) / (r.width / 2)) * 9;
-                card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.03,1.03,1.03)`;
-                card.style.setProperty('--mx', (x / r.width * 100) + '%');
-                card.style.setProperty('--my', (y / r.height * 100) + '%');
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) scale3d(1,1,1)';
-            });
-        });
-
-        // Reveal saat scroll
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+        // Muncul halus saat di-scroll
+        const io = new IntersectionObserver(es => es.forEach(en => {
+            if (!en.isIntersecting) return; io.unobserve(en.target);
+            if (en.target.dataset.rv) return;
+            en.target.animate([{ opacity:0, transform:'translateY(40px)' }, { opacity:1, transform:'none' }],
+                { duration:800, delay:(en.target.dataset.i || 0) * 90, easing:OUT, fill:'backwards' });
+        }), { threshold:.12 });
+        document.querySelectorAll('#keahlian .text-center, #keahlian .glass-panel, #projek .text-center, .karya-card, #kontak .glass-panel')
+            .forEach((el, i) => { el.dataset.i = i % 3; io.observe(el); });
 
         // Hanya satu video yang diputar pada satu waktu
         const vids = document.querySelectorAll('#karya-container video');
         vids.forEach(v => v.addEventListener('play', () => vids.forEach(o => { if (o !== v) o.pause(); })));
 
         gsap.from(".hero-elem", { duration: 1, y: 40, opacity: 0, stagger: 0.15, ease: "power3.out", delay: 0.2 });
+
     </script>
 </body>
 </html>
